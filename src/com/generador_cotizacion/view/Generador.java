@@ -17,11 +17,11 @@ import javax.swing.border.TitledBorder;
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Descripción", "Precio U.", "Descuento %", "Total"};
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %", "Importe"};
     private Object[][] data = {
-        {0," ", " ",0, 0}
+        {" "," ", " "," "," "," ", " "}
     };
-    private JTable table;
+    public JTable table;
     private DefaultTableModel model;
     public JButton btnSeleccionarImagen;
 	public JLabel lblYourimage;
@@ -31,8 +31,10 @@ public class Generador extends JFrame {
 	private JTextField txtEmail;
 	private JTextField txtPhoneNumber;
 	private JTextField txtDoneBy;
+	public JButton btnGenerarCotizacion;
 
     public Generador() {
+    	setLocationRelativeTo(null);
         model = new DefaultTableModel(data, columnNames) {
 
             private static final long serialVersionUID = 1L;
@@ -107,6 +109,9 @@ public class Generador extends JFrame {
         southPanel.add(button1);
         southPanel.add(button2);
         getContentPane().add(southPanel);
+        
+        btnGenerarCotizacion = new JButton("Generar cotización");
+        southPanel.add(btnGenerarCotizacion);
         
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -188,7 +193,7 @@ public class Generador extends JFrame {
 
     public void updateCol(){
     	DefaultTableModel model = (DefaultTableModel) table.getModel();
-        Object[] data0 = {0," ", " ",0, 0};
+        Object[] data0 = {" "," ", " "," "," "," ", " "};
         model.addRow(data0);
         
         System.out.println("model.getRowCount() --->" + model.getRowCount());
@@ -222,7 +227,6 @@ public class Generador extends JFrame {
                 Generador frame = new Generador();
                 frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 frame.pack();
-                frame.setLocationRelativeTo(null);
                 frame.setBounds(200, 250, 950, 700);
                 frame.setVisible(true);
             }
