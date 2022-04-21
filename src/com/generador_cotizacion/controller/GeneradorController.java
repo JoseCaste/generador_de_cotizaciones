@@ -55,14 +55,24 @@ public class GeneradorController implements ActionListener {
 
 	private void createModelToList(final Vector<?> data) {
 		for (Object object : data) {
-			
-			validateField((Vector<Object> )object);	
+			try {
+				validateField((Vector<Object> )object);
+				generateCotizacionPDF();
+			}catch (ExceptionConvert e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+				
 			
 		}
 		
 	}
 
-	private void validateField(final Vector<Object> fields){
+	private void generateCotizacionPDF() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validateField(final Vector<Object> fields) throws ExceptionConvert{
 		Product product = new Product();
 		try {
 			product.setTotalItem(Integer.parseInt(((String) fields.get(Elements.TOTAL.getId())).trim()));
@@ -70,28 +80,28 @@ public class GeneradorController implements ActionListener {
 			product.setCodigo((String)fields.get(Elements.CODIGO.getId()));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "La cantidad del producto no es un número váĺido");
+			throw new ExceptionConvert("La cantidad del producto no es un número válido");
 		}
 		
 		try {
 			product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "El precio unitario no es un número válido");
+			throw new ExceptionConvert("El precio unitario no es un número válido");
 		}
 		
 		try {
 			product.setSale(Integer.parseInt(((String) fields.get(Elements.SALE.getId())).trim()));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "El descuento no es un número válido");
+			throw new ExceptionConvert("El descuento no es un número válido");
 		}
 		
 		try {
 			product.setImporte(Double.parseDouble(((String) fields.get(Elements.IMPORTE.getId())).trim()));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "El importe no es un número válido");
+			throw new ExceptionConvert("El importe no es un número válido");
 		}
 		
 	}
