@@ -19,11 +19,13 @@ import javax.swing.table.DefaultTableModel;
 import com.generador_cotizacion.enums.Elements;
 import com.generador_cotizacion.exceptions.ExceptionConvert;
 import com.generador_cotizacion.model.Product;
+import com.generador_cotizacion.pdfGenerator.CotizacionGenerador;
 import com.generador_cotizacion.view.Generador;
 
 public class GeneradorController implements ActionListener {
 
 	private Generador generador;
+	private String imagePath;
 	
 	public GeneradorController() {}
 	
@@ -54,54 +56,55 @@ public class GeneradorController implements ActionListener {
 	}
 
 	private void createModelToList(final Vector<?> data) {
+		try {
+			validateField(data);
+			generateCotizacionPDF(data);
+		} catch (ExceptionConvert e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		
+	}
+
+	private void generateCotizacionPDF(final Vector<?> data) {
+		final CotizacionGenerador cotizacionGenerador = new CotizacionGenerador(data);
+		cotizacionGenerador.createPDF(imagePath);
+		
+	}
+
+	private void validateField(final Vector<?> data) throws ExceptionConvert{
 		for (Object object : data) {
+			Product product = new Product();
+			@SuppressWarnings("unchecked")
+			Vector<Object> fields = (Vector<Object> )object;
 			try {
-				validateField((Vector<Object> )object);
-				generateCotizacionPDF();
-			}catch (ExceptionConvert e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				product.setTotalItem(Integer.parseInt(((String) fields.get(Elements.TOTAL.getId())).trim()));
+				product.setUnidadMedida((String)fields.get(Elements.UNIDAD_MEDIDA.getId()));
+				product.setCodigo((String)fields.get(Elements.CODIGO.getId()));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				throw new ExceptionConvert("La cantidad del producto no es un número válido");
 			}
-				
 			
-		}
-		
-	}
-
-	private void generateCotizacionPDF() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void validateField(final Vector<Object> fields) throws ExceptionConvert{
-		Product product = new Product();
-		try {
-			product.setTotalItem(Integer.parseInt(((String) fields.get(Elements.TOTAL.getId())).trim()));
-			product.setUnidadMedida((String)fields.get(Elements.UNIDAD_MEDIDA.getId()));
-			product.setCodigo((String)fields.get(Elements.CODIGO.getId()));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			throw new ExceptionConvert("La cantidad del producto no es un número válido");
-		}
-		
-		try {
-			product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			throw new ExceptionConvert("El precio unitario no es un número válido");
-		}
-		
-		try {
-			product.setSale(Integer.parseInt(((String) fields.get(Elements.SALE.getId())).trim()));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			throw new ExceptionConvert("El descuento no es un número válido");
-		}
-		
-		try {
-			product.setImporte(Double.parseDouble(((String) fields.get(Elements.IMPORTE.getId())).trim()));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			throw new ExceptionConvert("El importe no es un número válido");
+			try {
+				product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				throw new ExceptionConvert("El precio unitario no es un número válido");
+			}
+			
+			try {
+				product.setSale(Integer.parseInt(((String) fields.get(Elements.SALE.getId())).trim()));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				throw new ExceptionConvert("El descuento no es un número válido");
+			}
+			
+			try {
+				product.setImporte(Double.parseDouble(((String) fields.get(Elements.IMPORTE.getId())).trim()));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				throw new ExceptionConvert("El importe no es un número válido");
+			}	
 		}
 		
 	}
@@ -112,7 +115,7 @@ public class GeneradorController implements ActionListener {
 		fileChooser.setFileFilter(new FileNameExtensionFilter("jpg", "png","jpeg"));
 		
 		if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			final String imagePath = fileChooser.getSelectedFile().getPath();
+			imagePath = fileChooser.getSelectedFile().getPath();
 			ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(generador.lblYourimage.getWidth(), generador.lblYourimage.getHeight(), Image.SCALE_DEFAULT));
 			generador.lblYourimage.setIcon(imageIcon);
 		}
