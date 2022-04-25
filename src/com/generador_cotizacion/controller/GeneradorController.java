@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.generador_cotizacion.enums.Elements;
 import com.generador_cotizacion.exceptions.ExceptionConvert;
+import com.generador_cotizacion.model.DataEnterprise;
 import com.generador_cotizacion.model.Product;
 import com.generador_cotizacion.pdfGenerator.CotizacionGenerador;
 import com.generador_cotizacion.view.Generador;
@@ -67,8 +68,14 @@ public class GeneradorController implements ActionListener {
 
 	private void generateCotizacionPDF(final Vector<?> data) {
 		final CotizacionGenerador cotizacionGenerador = new CotizacionGenerador(data);
-		cotizacionGenerador.createPDF(imagePath);
+		DataEnterprise enterprise = createDataEnterprise();
+		cotizacionGenerador.createPDF(imagePath, enterprise, data);
 		
+	}
+
+	private DataEnterprise createDataEnterprise() {
+		
+		return new DataEnterprise(generador.txtEName.getText(), generador.txtResponsable.getText(), generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
 	}
 
 	private void validateField(final Vector<?> data) throws ExceptionConvert{

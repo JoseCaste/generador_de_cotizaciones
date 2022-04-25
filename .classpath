@@ -39,5 +39,6 @@
 	<classpathentry kind="lib" path="/home/jose/Downloads/iText7-Core-7.1.3/svg-7.1.3-sources.jar"/>
 	<classpathentry kind="lib" path="/home/jose/Downloads/iText7-Core-7.1.3/io-7.1.3.jar"/>
 	<classpathentry kind="lib" path="/home/jose/Downloads/slf4j-api-1.7.9.jar"/>
+	<classpathentry kind="lib" path="/home/jose/Downloads/commons-compress-1.21.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
