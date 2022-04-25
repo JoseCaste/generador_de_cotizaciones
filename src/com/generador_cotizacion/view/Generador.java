@@ -19,18 +19,18 @@ public class Generador extends JFrame {
     private static final long serialVersionUID = 1L;
     private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %", "Importe"};
     private Object[][] data = {
-        {" "," ", " "," "," "," ", " "}
+        {"12","sas", "asas","asas","12","23", "12"}
     };
     public JTable table;
     private DefaultTableModel model;
     public JButton btnSeleccionarImagen;
 	public JLabel lblYourimage;
-	private JTextField txtNumberCotizacion;
-	private JTextField txtResponsable;
-	private JTextField txtEName;
-	private JTextField txtEmail;
-	private JTextField txtPhoneNumber;
-	private JTextField txtDoneBy;
+	public JTextField txtNumberCotizacion;
+	public JTextField txtResponsable;
+	public JTextField txtEName;
+	public JTextField txtEmail;
+	public JTextField txtPhoneNumber;
+	public JTextField txtDoneBy;
 	public JButton btnGenerarCotizacion;
 
     public Generador() {
@@ -157,6 +157,7 @@ public class Generador extends JFrame {
         panel_2.add(lblNombre);
         
         txtEName = new JTextField();
+        txtEName.setText("Empresa S.A");
         panel_2.add(txtEName);
         txtEName.setColumns(10);
         
@@ -164,6 +165,7 @@ public class Generador extends JFrame {
         panel_2.add(lblResponsable);
         
         txtResponsable = new JTextField();
+        txtResponsable.setText("Patito suarez");
         panel_2.add(txtResponsable);
         txtResponsable.setColumns(10);
         
@@ -171,6 +173,7 @@ public class Generador extends JFrame {
         panel_2.add(lblCorreoElectrnico);
         
         txtEmail = new JTextField();
+        txtEmail.setText("abc@gmail.com");
         panel_2.add(txtEmail);
         txtEmail.setColumns(10);
         
@@ -178,6 +181,7 @@ public class Generador extends JFrame {
         panel_2.add(lblTelefonoDeContacto);
         
         txtPhoneNumber = new JTextField();
+        txtPhoneNumber.setText("9871223872");
         panel_2.add(txtPhoneNumber);
         txtPhoneNumber.setColumns(10);
         
@@ -185,6 +189,7 @@ public class Generador extends JFrame {
         panel_2.add(lblAtendi);
         
         txtDoneBy = new JTextField();
+        txtDoneBy.setText("Atendido Jimenze");
         panel_2.add(txtDoneBy);
         txtDoneBy.setColumns(10);
         
