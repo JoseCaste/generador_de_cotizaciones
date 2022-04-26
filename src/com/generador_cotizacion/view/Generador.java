@@ -11,15 +11,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 import com.generador_cotizacion.controller.GeneradorController;
+import com.generador_cotizacion.enums.Elements;
 
 import javax.swing.border.TitledBorder;
 
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %", "Importe"};
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %"};
     private Object[][] data = {
-        {"12","sas", "asas","asas","12","23", "12"}
+        {"12","pala", "palabox","some","25.52","5"}
     };
     public JTable table;
     private DefaultTableModel model;
@@ -77,6 +78,7 @@ public class Generador extends JFrame {
                 System.out.println(str);
                 Object value = table.getValueAt(row, col);
                 System.out.println(String.valueOf(value));
+                
             }
         });
         getContentPane().setLayout(null);
@@ -197,7 +199,7 @@ public class Generador extends JFrame {
 
     public void updateCol(){
     	DefaultTableModel model = (DefaultTableModel) table.getModel();
-        Object[] data0 = {" "," ", " "," "," "," ", " "};
+        Object[] data0 = {"","", "","","",""};
         model.addRow(data0);
         
         System.out.println("model.getRowCount() --->" + model.getRowCount());

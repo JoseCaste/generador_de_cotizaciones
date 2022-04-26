@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.generador_cotizacion.enums.Elements;
 import com.generador_cotizacion.exceptions.ExceptionConvert;
-import com.generador_cotizacion.model.DataEnterprise;
+import com.generador_cotizacion.model.CotizadoData;
 import com.generador_cotizacion.model.Product;
 import com.generador_cotizacion.pdfGenerator.CotizacionGenerador;
 import com.generador_cotizacion.view.Generador;
@@ -68,7 +68,7 @@ public class GeneradorController implements ActionListener {
 
 	private void generateCotizacionPDF(final Vector<?> data) {
 		final CotizacionGenerador cotizacionGenerador = new CotizacionGenerador(data);
-		DataEnterprise enterprise = createDataEnterprise();
+		CotizadoData enterprise = createDataEnterprise();
 		try {
 			cotizacionGenerador.createPDF(imagePath, enterprise, data);
 			JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
@@ -80,9 +80,9 @@ public class GeneradorController implements ActionListener {
 		
 	}
 
-	private DataEnterprise createDataEnterprise() {
+	private CotizadoData createDataEnterprise() {
 		
-		return new DataEnterprise(generador.txtEName.getText(), generador.txtResponsable.getText(), generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
+		return new CotizadoData(generador.txtEName.getText(), generador.txtResponsable.getText(), generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
 	}
 
 	private void validateField(final Vector<?> data) throws ExceptionConvert{
@@ -113,12 +113,6 @@ public class GeneradorController implements ActionListener {
 				throw new ExceptionConvert("El descuento no es un número válido");
 			}
 			
-			try {
-				product.setImporte(Double.parseDouble(((String) fields.get(Elements.IMPORTE.getId())).trim()));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-				throw new ExceptionConvert("El importe no es un número válido");
-			}	
 		}
 		
 	}
