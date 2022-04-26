@@ -69,7 +69,14 @@ public class GeneradorController implements ActionListener {
 	private void generateCotizacionPDF(final Vector<?> data) {
 		final CotizacionGenerador cotizacionGenerador = new CotizacionGenerador(data);
 		DataEnterprise enterprise = createDataEnterprise();
-		cotizacionGenerador.createPDF(imagePath, enterprise, data);
+		try {
+			cotizacionGenerador.createPDF(imagePath, enterprise, data);
+			JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
 		
 	}
 
