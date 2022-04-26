@@ -34,13 +34,13 @@ import com.itextpdf.layout.property.UnitValue;
 public class CotizacionGenerador {
 
 	private Vector<?> data;
-	private int totalPrice;
+	private double totalPrice;
 
 	public CotizacionGenerador(Vector<?> data) {
 		this.data = data;
 	}
 
-	public boolean createPDF(final String imagePath, final DataEnterprise enterprise, final Vector<?> listProducts) {
+	public boolean createPDF(final String imagePath, final DataEnterprise enterprise, final Vector<?> listProducts) throws Exception{
 		try {
 			final File file = new File("/home/jose/Documents/PDFs/generate.pdf");
 			file.getParentFile().mkdir();
@@ -68,9 +68,10 @@ public class CotizacionGenerador {
 	        document.add(new Paragraph("Precios sujetos a cambios sin previo aviso").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.add(new Paragraph("IVA incluido").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.close();
-	        JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			throw new Exception("Error al crear el pdf");
 		}
 		
         
@@ -84,7 +85,7 @@ public class CotizacionGenerador {
 		
 		document.add(tableProductos);
 		
-		document.add(new Paragraph(String.format("TOTAL                                     %d", totalPrice)).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
+		document.add(new Paragraph(String.format("TOTAL                                     %s", String.valueOf(totalPrice))).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 	}
 
 	private void createProductCell(Table tableProductos, final Vector<?> listVector) {
@@ -101,20 +102,20 @@ public class CotizacionGenerador {
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.UNIT_PRICE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.SALE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.IMPORTE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-			totalPrice += Integer.parseInt((String)productFields.get(Elements.IMPORTE.getId()));
+			totalPrice += Double.parseDouble((String)productFields.get(Elements.IMPORTE.getId()));
 		}
 		
 		
 	}
 
 	private void createHeaders(Table tableProductos) {
-		tableProductos.addCell(simpleCell("Cantidad").setBold().setFontSize(8f));
-		tableProductos.addCell(simpleCell("Unidad de medida").setBold().setFontSize(8f));
-		tableProductos.addCell(simpleCell("Código").setBold().setFontSize(8f));
-		tableProductos.addCell(simpleCell("Descripción").setBold().setFontSize(8f));
-		tableProductos.addCell(simpleCell("Precio U.").setBold().setFontSize(8f).setTextAlignment(TextAlignment.RIGHT));
-		tableProductos.addCell(simpleCell("Descuento %").setBold().setFontSize(8f).setTextAlignment(TextAlignment.RIGHT));
-		tableProductos.addCell(simpleCell("Importe").setBold().setFontSize(8f).setTextAlignment(TextAlignment.RIGHT));
+		tableProductos.addCell(simpleCell("CANTIDAD").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("UNIDAD DE MEDIDA").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("CÓDIGO").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("DESCRIPCIÓN").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("PRECIO UNIT.").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
+		tableProductos.addCell(simpleCell("DESCUENTO %").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
+		tableProductos.addCell(simpleCell("IMPORTE").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
 		
 	}
 	private Cell simpleCell(final String text) {
