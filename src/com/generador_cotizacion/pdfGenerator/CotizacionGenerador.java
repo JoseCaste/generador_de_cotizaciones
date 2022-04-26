@@ -10,7 +10,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import com.generador_cotizacion.enums.Elements;
-import com.generador_cotizacion.model.DataEnterprise;
+import com.generador_cotizacion.model.CotizadoData;
 import com.generador_cotizacion.model.Product;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
@@ -40,7 +40,7 @@ public class CotizacionGenerador {
 		this.data = data;
 	}
 
-	public boolean createPDF(final String imagePath, final DataEnterprise enterprise, final Vector<?> listProducts) throws Exception{
+	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts) throws Exception{
 		try {
 			final File file = new File("/home/jose/Documents/PDFs/generate.pdf");
 			file.getParentFile().mkdir();
@@ -86,7 +86,7 @@ public class CotizacionGenerador {
 		
 		document.add(tableProductos);
 		
-		document.add(new Paragraph(String.format("TOTAL                                     %s", String.valueOf(totalPrice))).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
+		document.add(new Paragraph(String.format("TOTAL                            %s", String.valueOf(totalPrice))).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 	}
 
 	private void createProductCell(Table tableProductos, final Vector<?> listVector) {
@@ -102,13 +102,22 @@ public class CotizacionGenerador {
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.DESCRIPTION.getId())).setFontSize(8f));
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.UNIT_PRICE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 			tableProductos.addCell(simpleCell((String)productFields.get(Elements.SALE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-			tableProductos.addCell(simpleCell((String)productFields.get(Elements.IMPORTE.getId())).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-			totalPrice += Double.parseDouble((String)productFields.get(Elements.IMPORTE.getId()));
+			
+			final double totalImporte = Double.parseDouble((String)productFields.get(Elements.TOTAL.getId())) * Double.parseDouble((String) productFields.get(Elements.UNIT_PRICE.getId()));
+			
+			final double totalwithSale = totalWithSale(totalImporte, Integer.parseInt((String)productFields.get(Elements.SALE.getId())));
+			tableProductos.addCell(simpleCell(String.valueOf(totalwithSale)).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
+					
+			totalPrice += totalwithSale;
 		}
 		
 		
 	}
 
+	private double totalWithSale(final double total, final double sale) {
+		double totalImport = total - (total * (sale/100));
+		return totalImport;
+	}
 	private void createHeaders(Table tableProductos) {
 		tableProductos.addCell(simpleCell("CANTIDAD").setBold().setFontSize(6f));
 		tableProductos.addCell(simpleCell("UNIDAD DE MEDIDA").setBold().setFontSize(6f));
@@ -148,7 +157,7 @@ public class CotizacionGenerador {
 		return cell;
 	}
 	
-	public Cell createCentralText(DataEnterprise enterprise) {
+	public Cell createCentralText(CotizadoData enterprise) {
 		Cell cell = new Cell();
 		cell.add(new Paragraph(enterprise.getNameEnterprise()).setBold());
 		cell.add(new Paragraph(enterprise.getResponsable()).setFontSize(10f));
