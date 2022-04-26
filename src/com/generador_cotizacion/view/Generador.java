@@ -34,7 +34,6 @@ public class Generador extends JFrame {
 	public JButton btnGenerarCotizacion;
 
     public Generador() {
-    	setLocationRelativeTo(null);
         model = new DefaultTableModel(data, columnNames) {
 
             private static final long serialVersionUID = 1L;
@@ -233,6 +232,7 @@ public class Generador extends JFrame {
                 frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setBounds(200, 250, 950, 700);
+                frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
         });

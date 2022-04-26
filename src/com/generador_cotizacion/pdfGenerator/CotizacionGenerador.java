@@ -53,6 +53,7 @@ public class CotizacionGenerador {
 	        Table table= new Table(UnitValue.createPercentArray(new float[]{30f, 30f,30f}));
 	        final ImageData data = ImageDataFactory.create(imagePath);
 	        Image img = new Image(data);
+	        table.setWidth(UnitValue.createPercentValue(100));
 	        
 	        PdfFont font= PdfFontFactory.createFont(StandardFonts.HELVETICA);
 	        table.addCell(createImageCell(img));
@@ -127,7 +128,7 @@ public class CotizacionGenerador {
 	private Cell createImageCell(Image img) {
 		// TODO Auto-generated method stub
 		Cell cell = new Cell();
-		cell.add(img.setAutoScale(true));
+		cell.add(img.scaleAbsolute(100f, 100f));
 		cell.setBorder(null);
 		return cell;
 	}
