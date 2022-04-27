@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ import com.generador_cotizacion.exceptions.ExceptionConvert;
 import com.generador_cotizacion.model.CotizadoData;
 import com.generador_cotizacion.model.Product;
 import com.generador_cotizacion.pdfGenerator.CotizacionGenerador;
+import com.generador_cotizacion.view.EnterpriseData;
 import com.generador_cotizacion.view.Generador;
 
 public class GeneradorController implements ActionListener {
@@ -38,15 +40,20 @@ public class GeneradorController implements ActionListener {
 	private void initListeners() {
 		this.generador.btnSeleccionarImagen.addActionListener(this);
 		this.generador.btnGenerarCotizacion.addActionListener(this);
+		this.generador.menuDatosDeEmpresa.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource() == generador.btnSeleccionarImagen) {
+		if(Objects.equals(arg0.getSource(), generador.btnSeleccionarImagen)) {
 			openFileChooser();
 		}
-		if(arg0.getSource() == generador.btnGenerarCotizacion) {
+		if(Objects.equals(arg0.getSource(), generador.btnGenerarCotizacion)) {
 			createCotizacion();
+		}
+		if(Objects.equals(arg0.getSource(), generador.menuDatosDeEmpresa)) {
+			EnterpriseData enterpriseData = new EnterpriseData();
+			enterpriseData.getFrame().setVisible(true);
 		}
 
 	}

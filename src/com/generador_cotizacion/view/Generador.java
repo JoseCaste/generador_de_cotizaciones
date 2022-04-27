@@ -33,6 +33,7 @@ public class Generador extends JFrame {
 	public JTextField txtPhoneNumber;
 	public JTextField txtDoneBy;
 	public JButton btnGenerarCotizacion;
+	public JMenuItem menuDatosDeEmpresa;
 
     public Generador() {
         model = new DefaultTableModel(data, columnNames) {
@@ -193,6 +194,16 @@ public class Generador extends JFrame {
         txtDoneBy.setText("Atendido Jimenze");
         panel_2.add(txtDoneBy);
         txtDoneBy.setColumns(10);
+       
+        
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        
+        JMenu mnConfiguracin = new JMenu("Configuración");
+        menuBar.add(mnConfiguracin);
+        
+        menuDatosDeEmpresa = new JMenuItem("Datos de empresa cotizadora");
+        mnConfiguracin.add(menuDatosDeEmpresa);
         
         GeneradorController generadorController = new GeneradorController(this);
     }
