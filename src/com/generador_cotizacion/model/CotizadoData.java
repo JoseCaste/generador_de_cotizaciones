@@ -1,6 +1,6 @@
 package com.generador_cotizacion.model;
 
-public class DataEnterprise {
+public class CotizadoData {
 
 	private String nameEnterprise;
 	private String responsable;
@@ -8,7 +8,7 @@ public class DataEnterprise {
 	private String phone;
 	private String atendidoBy;
 	
-	public DataEnterprise(String nameEnterprise, String responsable, String email, String phone, String atendidoBy) {
+	public CotizadoData(String nameEnterprise, String responsable, String email, String phone, String atendidoBy) {
 		this.nameEnterprise = nameEnterprise;
 		this.responsable = responsable;
 		this.email = email;
