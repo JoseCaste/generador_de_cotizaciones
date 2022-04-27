@@ -1,14 +1,13 @@
 package com.generador_cotizacion.view;
 
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import com.generador_cotizacion.controller.EnterpriseDataController;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -21,38 +20,6 @@ public class EnterpriseData {
 	public JTextField txtLocatedAt;
 	public JTextField txtPhone;
 	public JButton btnGuardarDatos;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (UnsupportedLookAndFeelException e) {
-            // handle exception
-        } catch (ClassNotFoundException e) {
-            // handle exception
-        } catch (InstantiationException e) {
-            // handle exception
-        } catch (IllegalAccessException e) {
-            // handle exception
-        }
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EnterpriseData window = new EnterpriseData();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -68,9 +35,7 @@ public class EnterpriseData {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 763, 303);
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1));
-		//frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Datos de la empresa cotizadora", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -112,5 +77,18 @@ public class EnterpriseData {
 		
 		btnGuardarDatos = new JButton("Guardar datos");
 		panel_1.add(btnGuardarDatos);
+		
+		@SuppressWarnings("unused")
+		EnterpriseDataController controller = new EnterpriseDataController(this);
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+	
+	
 }
