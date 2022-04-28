@@ -82,7 +82,7 @@ public class GeneradorController implements ActionListener {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			System.err.println(e.getMessage());
+			JOptionPane.showMessageDialog(generador, e.getMessage());
 		}
 		
 	}

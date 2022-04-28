@@ -1,17 +1,20 @@
 package com.generador_cotizacion.pdfGenerator;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
+import java.util.Properties;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
+import org.jasypt.util.text.AES256TextEncryptor;
 
 import com.generador_cotizacion.enums.Elements;
+import com.generador_cotizacion.enums.PropertiesKeys;
+import com.generador_cotizacion.exceptions.FileException;
 import com.generador_cotizacion.model.CotizadoData;
-import com.generador_cotizacion.model.Product;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -57,7 +60,7 @@ public class CotizacionGenerador {
 	        
 	        PdfFont font= PdfFontFactory.createFont(StandardFonts.HELVETICA);
 	        table.addCell(createImageCell(img));
-	        table.addCell(createCentralText(enterprise).setTextAlignment(TextAlignment.CENTER));
+	        table.addCell(createCentralText().setTextAlignment(TextAlignment.CENTER));
 	        table.addCell(createCotizacionCell("Cotización Número",12).setBold().setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
 	        document.add(table);
 	       
@@ -69,10 +72,15 @@ public class CotizacionGenerador {
 	        document.add(new Paragraph("Precios sujetos a cambios sin previo aviso").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.add(new Paragraph("IVA incluido").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.close();
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			throw new Exception("Error al crear el pdf");
+		}catch (FileException e) {
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
         
@@ -157,13 +165,30 @@ public class CotizacionGenerador {
 		return cell;
 	}
 	
-	public Cell createCentralText(CotizadoData enterprise) {
+	public Cell createCentralText() throws FileException{
 		Cell cell = new Cell();
-		cell.add(new Paragraph(enterprise.getNameEnterprise()).setBold());
-		cell.add(new Paragraph(enterprise.getResponsable()).setFontSize(10f));
-		cell.add(new Paragraph(enterprise.getEmail()).setFontSize(10f));
-		cell.add(new Paragraph(enterprise.getPhone()).setFontSize(10f));
-		cell.add(new Paragraph(enterprise.getAtendidoBy()).setFontSize(10f));
+		Properties properties = new Properties();
+		File file = new File("/home/jose/Documents/PDFs/dataenterprise.xml");
+		if(!file.canRead())
+			throw new FileException();
+		
+		try {
+			FileInputStream fileInputStream = new FileInputStream(file);
+			properties.loadFromXML(fileInputStream);
+			
+			AES256TextEncryptor decrypt = new AES256TextEncryptor();
+			decrypt.setPassword(PropertiesKeys.PASSWORD.getId());
+			
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setBold());
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId()))).setFontSize(10f));
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setFontSize(10f));
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setFontSize(10f));
+			
+			fileInputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		cell.setBorder(null);
 		return cell;
 	}
