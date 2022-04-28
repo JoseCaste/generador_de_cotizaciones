@@ -182,7 +182,7 @@ public class CotizacionGenerador {
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setBold());
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId()))).setFontSize(10f));
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setFontSize(10f));
-			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setFontSize(10f));
+			cell.add(new Paragraph("Tel: "+decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setFontSize(10f));
 			
 			fileInputStream.close();
 		} catch (IOException e) {
