@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import org.jasypt.util.text.AES256TextEncryptor;
 
 import com.generador_cotizacion.enums.Elements;
@@ -76,6 +78,10 @@ public class CotizacionGenerador {
 	        
 	        createTableWithProducts(listProducts, document);
 	        
+	        String totalInWords = JOptionPane.showInputDialog(String.format("Introduza el valor en palabras (%s)", totalPrice));
+	        totalInWords = totalInWords.concat(" 00/100 MXN");
+	        
+	        document.add(new Paragraph(totalInWords).setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.add(new Paragraph("Precios sujetos a cambios sin previo aviso").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.add(new Paragraph("IVA incluido").setFontSize(10f).setTextAlignment(TextAlignment.CENTER));
 	        document.close();
