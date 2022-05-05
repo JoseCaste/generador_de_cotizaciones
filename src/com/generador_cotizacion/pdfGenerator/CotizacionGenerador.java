@@ -25,12 +25,16 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.DashedBorder;
 import com.itextpdf.layout.borders.RoundDotsBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.BorderRadius;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
@@ -43,7 +47,7 @@ public class CotizacionGenerador {
 		this.data = data;
 	}
 
-	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts) throws Exception{
+	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts, final int numeroCotizacion) throws Exception{
 		try {
 			final File file = new File("/home/jose/Documents/PDFs/generate.pdf");
 			file.getParentFile().mkdir();
@@ -61,10 +65,13 @@ public class CotizacionGenerador {
 	        PdfFont font= PdfFontFactory.createFont(StandardFonts.HELVETICA);
 	        table.addCell(createImageCell(img));
 	        table.addCell(createCentralText().setTextAlignment(TextAlignment.CENTER));
-	        table.addCell(createCotizacionCell("Cotización Número",12).setBold().setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
+	        table.addCell(createCotizacionCell("Cotización Número",numeroCotizacion).setBold().setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
 	        document.add(table);
 	       
 	        document.add(new Paragraph(new Text("Fecha y hora: ").setFontSize(10f).setBold()).add(new Text(LocalDate.now()+" "+LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss"))).setFontSize(10f)).setTextAlignment(TextAlignment.RIGHT));
+	        
+	        createCotizadoTable(document, enterprise);
+	        
 	        document.add(new Paragraph("A continuación se presentamos nuestra oferta que esperamos que sea de su conformidad"));
 	        
 	        createTableWithProducts(listProducts, document);
@@ -86,6 +93,21 @@ public class CotizacionGenerador {
         
 		return true;
 	}
+	private void createCotizadoTable(Document document, CotizadoData cotizadoData) {
+		Table table = new Table(UnitValue.createPercentArray(new float[]{60f, 60f}));
+		table.setWidth(UnitValue.createPercentValue(100));
+		table.setFontSize(10f);
+		table.setBorder(new SolidBorder(Color.convertRgbToCmyk(new DeviceRgb(0, 0, 0)),1));
+		table.setBorderRadius(new BorderRadius(50f));
+		
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Atendió: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Empresa: ").setBold()).add(new Text(cotizadoData.getNameEnterprise()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Responsable: ").setBold()).add(new Text(cotizadoData.getResponsable()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrónico: ").setBold()).add(new Text(cotizadoData.getEmail()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Contacto: ").setBold()).add(new Text(cotizadoData.getPhone()))));
+		document.add(table);
+	}
+
 	private void createTableWithProducts(final Vector<?> listProducts, Document document) {
 		Table tableProductos = new Table(UnitValue.createPercentArray(new float[] {60f,60f,60f,60f,60f,60f,60f}));
 		tableProductos.setWidth(UnitValue.createPercentValue(100));
