@@ -57,7 +57,7 @@ public class EnterpriseData {
 		panel.add(txtResponsable);
 		txtResponsable.setColumns(10);
 		
-		JLabel lblUbicacin = new JLabel("UbicaciÃ³n");
+		JLabel lblUbicacin = new JLabel("Ubicación");
 		panel.add(lblUbicacin);
 		
 		txtLocatedAt = new JTextField();

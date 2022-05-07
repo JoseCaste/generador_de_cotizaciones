@@ -24,14 +24,15 @@ public class GeneradorController implements ActionListener {
 
 	private Generador generador;
 	private String imagePath;
-	
-	public GeneradorController() {}
-	
+
+	public GeneradorController() {
+	}
+
 	public GeneradorController(Generador generador) {
 		this.generador = generador;
 		initListeners();
 	}
-	
+
 	private void initListeners() {
 		this.generador.btnSeleccionarImagen.addActionListener(this);
 		this.generador.btnGenerarCotizacion.addActionListener(this);
@@ -40,13 +41,13 @@ public class GeneradorController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(Objects.equals(arg0.getSource(), generador.btnSeleccionarImagen)) {
+		if (Objects.equals(arg0.getSource(), generador.btnSeleccionarImagen)) {
 			openFileChooser();
 		}
-		if(Objects.equals(arg0.getSource(), generador.btnGenerarCotizacion)) {
+		if (Objects.equals(arg0.getSource(), generador.btnGenerarCotizacion)) {
 			createCotizacion();
 		}
-		if(Objects.equals(arg0.getSource(), generador.menuDatosDeEmpresa)) {
+		if (Objects.equals(arg0.getSource(), generador.menuDatosDeEmpresa)) {
 			EnterpriseData enterpriseData = new EnterpriseData();
 			enterpriseData.getFrame().setVisible(true);
 		}
@@ -60,77 +61,86 @@ public class GeneradorController implements ActionListener {
 
 	private void createModelToList(final Vector<?> data) {
 		try {
+			if(imagePath == null || imagePath.equals(""))
+				throw new Exception("La logo no ha sido sido seleccionado");
 			validateField(data);
 			generateCotizacionPDF(data);
 		} catch (ExceptionConvert e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		
+
 	}
 
 	private void generateCotizacionPDF(final Vector<?> data) {
 		final CotizacionGenerador cotizacionGenerador = new CotizacionGenerador(data);
 		CotizadoData enterprise = createDataEnterprise();
 		try {
-			cotizacionGenerador.createPDF(imagePath, enterprise, data, Integer.parseInt(generador.txtNumberCotizacion.getText()));
-			JOptionPane.showMessageDialog(null, "La cotizaciÃ³n se ha creado con Ã©xito");
-		}catch (NumberFormatException e) {
+			cotizacionGenerador.createPDF(imagePath, enterprise, data,
+					Integer.parseInt(generador.txtNumberCotizacion.getText()));
+			JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Indicar un nÃºmero de cotizaciÃ³n");
-		
-		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Indicar un número de cotización");
+
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(generador, e.getMessage());
 		}
-		
+
 	}
 
 	private CotizadoData createDataEnterprise() {
-		
-		return new CotizadoData(generador.txtEName.getText(), generador.txtResponsable.getText(), generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
+
+		return new CotizadoData(generador.txtEName.getText(), generador.txtResponsable.getText(),
+				generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
 	}
 
-	private void validateField(final Vector<?> data) throws ExceptionConvert{
+	private void validateField(final Vector<?> data) throws ExceptionConvert {
 		for (Object object : data) {
 			Product product = new Product();
 			@SuppressWarnings("unchecked")
-			Vector<Object> fields = (Vector<Object> )object;
+			Vector<Object> fields = (Vector<Object>) object;
 			try {
 				product.setTotalItem(Integer.parseInt(((String) fields.get(Elements.TOTAL.getId())).trim()));
-				product.setUnidadMedida((String)fields.get(Elements.UNIDAD_MEDIDA.getId()));
-				product.setCodigo((String)fields.get(Elements.CODIGO.getId()));
+				product.setUnidadMedida((String) fields.get(Elements.UNIDAD_MEDIDA.getId()));
+				product.setCodigo((String) fields.get(Elements.CODIGO.getId()));
+
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				throw new ExceptionConvert("La cantidad del producto no es un nÃºmero vÃ¡lido");
+				throw new ExceptionConvert("La cantidad del producto no es un número válido");
 			}
-			
+
 			try {
 				product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				throw new ExceptionConvert("El precio unitario no es un nÃºmero vÃ¡lido");
+				throw new ExceptionConvert("El precio unitario no es un número válido");
 			}
-			
+
 			try {
 				product.setSale(Integer.parseInt(((String) fields.get(Elements.SALE.getId())).trim()));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				throw new ExceptionConvert("El descuento no es un nÃºmero vÃ¡lido");
+				throw new ExceptionConvert("El descuento no es un número válido");
 			}
-			
+
 		}
-		
+
 	}
 
 	private void openFileChooser() {
-		
+
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new FileNameExtensionFilter("jpg", "png","jpeg"));
-		
-		if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+		fileChooser.setFileFilter(new FileNameExtensionFilter("jpg", "png", "jpeg"));
+
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			imagePath = fileChooser.getSelectedFile().getPath();
-			ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(generador.lblYourimage.getWidth(), generador.lblYourimage.getHeight(), Image.SCALE_DEFAULT));
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(
+					generador.lblYourimage.getWidth(), generador.lblYourimage.getHeight(), Image.SCALE_DEFAULT));
 			generador.lblYourimage.setIcon(imageIcon);
 		}
 	}

@@ -51,9 +51,9 @@ public class CotizacionGenerador {
 
 	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts, final int numeroCotizacion) throws Exception{
 		try {
-			final File file = new File("/home/jose/Documents/PDFs/generate.pdf");
+			final File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 			file.getParentFile().mkdir();
-			PdfWriter writer = new PdfWriter("/home/jose/Documents/PDFs/generate.pdf");
+			PdfWriter writer = new PdfWriter("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 	        
 	        PdfDocument pdf = new PdfDocument(writer);
 	        
@@ -67,14 +67,14 @@ public class CotizacionGenerador {
 	        PdfFont font= PdfFontFactory.createFont(StandardFonts.HELVETICA);
 	        table.addCell(createImageCell(img));
 	        table.addCell(createCentralText().setTextAlignment(TextAlignment.CENTER));
-	        table.addCell(createCotizacionCell("CotizaciÃ³n NÃºmero",numeroCotizacion).setBold().setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
+	        table.addCell(createCotizacionCell("Cotización Número",numeroCotizacion).setBold().setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
 	        document.add(table);
 	       
 	        document.add(new Paragraph(new Text("Fecha y hora: ").setFontSize(10f).setBold()).add(new Text(LocalDate.now()+" "+LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss"))).setFontSize(10f)).setTextAlignment(TextAlignment.RIGHT));
 	        
 	        createCotizadoTable(document, enterprise);
 	        
-	        document.add(new Paragraph("A continuaciÃ³n se presentamos nuestra oferta que esperamos que sea de su conformidad"));
+	        document.add(new Paragraph("A continuación se presentamos nuestra oferta que esperamos que sea de su conformidad"));
 	        
 	        createTableWithProducts(listProducts, document);
 	        
@@ -106,10 +106,10 @@ public class CotizacionGenerador {
 		table.setBorder(new SolidBorder(Color.convertRgbToCmyk(new DeviceRgb(0, 0, 0)),1));
 		table.setBorderRadius(new BorderRadius(50f));
 		
-		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("AtendiÃ³: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Atendió: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
 		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Empresa: ").setBold()).add(new Text(cotizadoData.getNameEnterprise()))));
 		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Responsable: ").setBold()).add(new Text(cotizadoData.getResponsable()))));
-		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrÃ³nico: ").setBold()).add(new Text(cotizadoData.getEmail()))));
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrónico: ").setBold()).add(new Text(cotizadoData.getEmail()))));
 		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Contacto: ").setBold()).add(new Text(cotizadoData.getPhone()))));
 		document.add(table);
 	}
@@ -157,8 +157,8 @@ public class CotizacionGenerador {
 	private void createHeaders(Table tableProductos) {
 		tableProductos.addCell(simpleCell("CANTIDAD").setBold().setFontSize(6f));
 		tableProductos.addCell(simpleCell("UNIDAD DE MEDIDA").setBold().setFontSize(6f));
-		tableProductos.addCell(simpleCell("CÃ“DIGO").setBold().setFontSize(6f));
-		tableProductos.addCell(simpleCell("DESCRIPCIÃ“N").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("CÓDIGO").setBold().setFontSize(6f));
+		tableProductos.addCell(simpleCell("DESCRIPCIÓN").setBold().setFontSize(6f));
 		tableProductos.addCell(simpleCell("PRECIO UNIT.").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
 		tableProductos.addCell(simpleCell("DESCUENTO %").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
 		tableProductos.addCell(simpleCell("IMPORTE").setBold().setFontSize(6f).setTextAlignment(TextAlignment.RIGHT));
@@ -196,7 +196,7 @@ public class CotizacionGenerador {
 	public Cell createCentralText() throws FileException{
 		Cell cell = new Cell();
 		Properties properties = new Properties();
-		File file = new File("/home/jose/Documents/PDFs/dataenterprise.xml");
+		File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\dataenterprise.xml");
 		if(!file.canRead())
 			throw new FileException();
 		
@@ -209,8 +209,8 @@ public class CotizacionGenerador {
 			
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setBold());
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId()))).setFontSize(10f));
-			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setFontSize(10f));
-			cell.add(new Paragraph("Tel: "+decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setFontSize(10f));
+			cell.add(new Paragraph("Tel: "+decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setFontSize(10f));
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setFontSize(8f));
 			
 			fileInputStream.close();
 		} catch (IOException e) {
