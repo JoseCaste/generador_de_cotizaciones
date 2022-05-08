@@ -3,14 +3,14 @@ package com.generador_cotizacion.model;
 public class CotizadoData {
 
 	private String nameEnterprise;
-	private String responsable;
+	private String address;
 	private String email;
 	private String phone;
 	private String atendidoBy;
 	
-	public CotizadoData(String nameEnterprise, String responsable, String email, String phone, String atendidoBy) {
+	public CotizadoData(String nameEnterprise, String address, String email, String phone, String atendidoBy) {
 		this.nameEnterprise = nameEnterprise;
-		this.responsable = responsable;
+		this.address = address;
 		this.email = email;
 		this.phone = phone;
 		this.atendidoBy = atendidoBy;
@@ -24,12 +24,12 @@ public class CotizadoData {
 		this.nameEnterprise = nameEnterprise;
 	}
 
-	public String getResponsable() {
-		return responsable;
+	public String getaddress() {
+		return address;
 	}
 
-	public void setResponsable(String responsable) {
-		this.responsable = responsable;
+	public void setaddress(String address) {
+		this.address = address;
 	}
 
 	public String getEmail() {

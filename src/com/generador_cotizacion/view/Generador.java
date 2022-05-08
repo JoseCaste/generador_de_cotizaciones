@@ -18,16 +18,16 @@ import javax.swing.border.TitledBorder;
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %"};
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U."};
     public Object[][] data = {
-        {"","", "","","",""}
+        {"","", "","",""}
     };
     public JTable table;
     public DefaultTableModel model;
     public JButton btnSeleccionarImagen;
 	public JLabel lblYourimage;
 	public JTextField txtNumberCotizacion;
-	public JTextField txtResponsable;
+	public JTextField txtAddress;
 	public JTextField txtEName;
 	public JTextField txtEmail;
 	public JTextField txtPhoneNumber;
@@ -158,7 +158,7 @@ public class Generador extends JFrame {
         txtNumberCotizacion.setColumns(10);
         
         JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new TitledBorder(null, "Datos de la empresa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_2.setBorder(new TitledBorder(null, "Datos del cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel_2.setBounds(259, 12, 397, 223);
         getContentPane().add(panel_2);
         panel_2.setLayout(new GridLayout(0, 2));
@@ -171,13 +171,13 @@ public class Generador extends JFrame {
         panel_2.add(txtEName);
         txtEName.setColumns(10);
         
-        JLabel lblResponsable = new JLabel("Responsable");
-        panel_2.add(lblResponsable);
+        JLabel lblAddress = new JLabel("Domicilio");
+        panel_2.add(lblAddress);
         
-        txtResponsable = new JTextField();
-        //txtResponsable.setText("Patito suarez");
-        panel_2.add(txtResponsable);
-        txtResponsable.setColumns(10);
+        txtAddress = new JTextField();
+        //txtAddress.setText("Patito suarez");
+        panel_2.add(txtAddress);
+        txtAddress.setColumns(10);
         
         JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
         panel_2.add(lblCorreoElectrnico);

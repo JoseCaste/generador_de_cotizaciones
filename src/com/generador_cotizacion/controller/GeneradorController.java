@@ -66,9 +66,6 @@ public class GeneradorController implements ActionListener {
 				throw new Exception("La logo no ha sido sido seleccionado");
 			validateField(data);
 			generateCotizacionPDF(data);
-			for (int i = 0; i < this.generador.model.getRowCount(); i++) {
-					
-			}
 		} catch (ExceptionConvert e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch (Exception e) {
@@ -99,7 +96,7 @@ public class GeneradorController implements ActionListener {
 
 	private CotizadoData createDataEnterprise() {
 
-		return new CotizadoData(generador.txtEName.getText(), generador.txtResponsable.getText(),
+		return new CotizadoData(generador.txtEName.getText(),generador.txtAddress.getText(),
 				generador.txtEmail.getText(), generador.txtPhoneNumber.getText(), generador.txtDoneBy.getText());
 	}
 
@@ -123,13 +120,6 @@ public class GeneradorController implements ActionListener {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 				throw new ExceptionConvert("El precio unitario no es un número válido");
-			}
-
-			try {
-				product.setSale(Integer.parseInt(((String) fields.get(Elements.SALE.getId())).trim()));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-				throw new ExceptionConvert("El descuento no es un número válido");
 			}
 
 		}
