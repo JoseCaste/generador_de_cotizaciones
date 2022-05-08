@@ -35,7 +35,7 @@ public class EnterpriseDataController implements ActionListener {
 			final String phone = this.enterpriseData.txtPhone.getText();
 			
 			try {
-				File propertiesData = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\dataenterprise.xml");
+				File propertiesData = new File("C:\\Users\\Wiliam\\Desktop\\dataenterprise.xml");
 				Properties properties = new Properties();
 				if(!propertiesData.canRead()) 
 					propertiesData.createNewFile(); 

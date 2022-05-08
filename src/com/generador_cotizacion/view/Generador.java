@@ -19,11 +19,11 @@ public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U.", "Descuento %"};
-    private Object[][] data = {
-        {"12","pala", "palabox","some","25.52","5"}
+    public Object[][] data = {
+        {"","", "","","",""}
     };
     public JTable table;
-    private DefaultTableModel model;
+    public DefaultTableModel model;
     public JButton btnSeleccionarImagen;
 	public JLabel lblYourimage;
 	public JTextField txtNumberCotizacion;
@@ -78,7 +78,7 @@ public class Generador extends JFrame {
                 }
                 str += "Selected Cell: " + table.getSelectedRow() + ", " + table.getSelectedColumn();
                 System.out.println(str);
-                Object value = table.getValueAt(row, col);
+                Object value = table.getValueAt(row == -1 ? 0 : row, col);
                 System.out.println(String.valueOf(value));
                 
             }
@@ -89,14 +89,16 @@ public class Generador extends JFrame {
         scrollPane.setBounds(26, 292, 863, 304);
         getContentPane().add(scrollPane);
         btnRemoveRow= new JButton("Remover fila");
+        
         btnRemoveRow.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
             	try {
-            		final int rowNumber = Integer.parseInt(JOptionPane.showInputDialog("Remover producto #"));
-                    if (model.getRowCount() > 0) {
+            		//final int rowNumber = Integer.parseInt(JOptionPane.showInputDialog("Remover producto #"));
+                    /*if (model.getRowCount() >= 0) {
                     	model.removeRow(rowNumber-1);
-                    }	
+                    }*/
+            		model.removeRow(table.getSelectedRow());
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "No es un número válido");
@@ -165,7 +167,7 @@ public class Generador extends JFrame {
         panel_2.add(lblNombre);
         
         txtEName = new JTextField();
-        txtEName.setText("Empresa S.A");
+        //txtEName.setText("Empresa S.A");
         panel_2.add(txtEName);
         txtEName.setColumns(10);
         
@@ -173,7 +175,7 @@ public class Generador extends JFrame {
         panel_2.add(lblResponsable);
         
         txtResponsable = new JTextField();
-        txtResponsable.setText("Patito suarez");
+        //txtResponsable.setText("Patito suarez");
         panel_2.add(txtResponsable);
         txtResponsable.setColumns(10);
         
@@ -181,7 +183,7 @@ public class Generador extends JFrame {
         panel_2.add(lblCorreoElectrnico);
         
         txtEmail = new JTextField();
-        txtEmail.setText("abc@gmail.com");
+        //txtEmail.setText("abc@gmail.com");
         panel_2.add(txtEmail);
         txtEmail.setColumns(10);
         
@@ -189,7 +191,7 @@ public class Generador extends JFrame {
         panel_2.add(lblTelefonoDeContacto);
         
         txtPhoneNumber = new JTextField();
-        txtPhoneNumber.setText("9871223872");
+        //txtPhoneNumber.setText("9871223872");
         panel_2.add(txtPhoneNumber);
         txtPhoneNumber.setColumns(10);
         
@@ -197,7 +199,7 @@ public class Generador extends JFrame {
         panel_2.add(lblAtendi);
         
         txtDoneBy = new JTextField();
-        txtDoneBy.setText("Atendido Jimenze");
+        //txtDoneBy.setText("Atendido Jimenze");
         panel_2.add(txtDoneBy);
         txtDoneBy.setColumns(10);
        

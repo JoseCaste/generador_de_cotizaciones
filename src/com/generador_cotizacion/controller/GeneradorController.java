@@ -3,6 +3,7 @@ package com.generador_cotizacion.controller;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -65,6 +66,9 @@ public class GeneradorController implements ActionListener {
 				throw new Exception("La logo no ha sido sido seleccionado");
 			validateField(data);
 			generateCotizacionPDF(data);
+			for (int i = 0; i < this.generador.model.getRowCount(); i++) {
+					
+			}
 		} catch (ExceptionConvert e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch (Exception e) {
@@ -79,7 +83,7 @@ public class GeneradorController implements ActionListener {
 		CotizadoData enterprise = createDataEnterprise();
 		try {
 			cotizacionGenerador.createPDF(imagePath, enterprise, data,
-					Integer.parseInt(generador.txtNumberCotizacion.getText()));
+					generador.txtNumberCotizacion.getText());
 			JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

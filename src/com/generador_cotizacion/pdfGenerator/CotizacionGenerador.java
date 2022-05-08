@@ -49,10 +49,12 @@ public class CotizacionGenerador {
 		this.data = data;
 	}
 
-	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts, final int numeroCotizacion) throws Exception{
+	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts, final String numeroCotizacion) throws Exception{
 		try {
 			final File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
+			//final File file = new File("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
 			file.getParentFile().mkdir();
+			//PdfWriter writer = new PdfWriter("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
 			PdfWriter writer = new PdfWriter("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 	        
 	        PdfDocument pdf = new PdfDocument(writer);
@@ -74,7 +76,7 @@ public class CotizacionGenerador {
 	        
 	        createCotizadoTable(document, enterprise);
 	        
-	        document.add(new Paragraph("A continuación se presentamos nuestra oferta que esperamos que sea de su conformidad"));
+	        //document.add(new Paragraph("A continuación se presentamos nuestra oferta que esperamos que sea de su conformidad"));
 	        
 	        createTableWithProducts(listProducts, document);
 	        
@@ -185,7 +187,7 @@ public class CotizacionGenerador {
 		return cell;
 	}
 	
-	public Cell createCotizacionCell(final String text, final int cotizacionNumber) {
+	public Cell createCotizacionCell(final String text, final String cotizacionNumber) {
 		Cell cell= new Cell();
 		cell.add(new Paragraph(new Text(text))).setPaddingLeft(48).setFontSize(9);
 		cell.add(new Paragraph(String.valueOf(cotizacionNumber)).setTextAlignment(TextAlignment.CENTER).setFontColor(Color.convertRgbToCmyk(new DeviceRgb(27, 1, 253))));
@@ -196,7 +198,8 @@ public class CotizacionGenerador {
 	public Cell createCentralText() throws FileException{
 		Cell cell = new Cell();
 		Properties properties = new Properties();
-		File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\dataenterprise.xml");
+		//File file = new File("C:\\Users\\Wiliam\\Desktop\\dataenterprise.xml");
+		File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 		if(!file.canRead())
 			throw new FileException();
 		
