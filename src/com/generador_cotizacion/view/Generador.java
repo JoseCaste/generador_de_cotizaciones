@@ -18,22 +18,23 @@ import javax.swing.border.TitledBorder;
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Unidad de medida","CÃ³digo","DescripciÃ³n", "Precio U.", "Descuento %"};
-    private Object[][] data = {
-        {"12","pala", "palabox","some","25.52","5"}
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U."};
+    public Object[][] data = {
+        {"","", "","",""}
     };
     public JTable table;
-    private DefaultTableModel model;
+    public DefaultTableModel model;
     public JButton btnSeleccionarImagen;
 	public JLabel lblYourimage;
 	public JTextField txtNumberCotizacion;
-	public JTextField txtResponsable;
+	public JTextField txtAddress;
 	public JTextField txtEName;
 	public JTextField txtEmail;
 	public JTextField txtPhoneNumber;
 	public JTextField txtDoneBy;
 	public JButton btnGenerarCotizacion;
 	public JMenuItem menuDatosDeEmpresa;
+	public JButton btnRemoveRow;
 
     public Generador() {
         model = new DefaultTableModel(data, columnNames) {
@@ -77,7 +78,7 @@ public class Generador extends JFrame {
                 }
                 str += "Selected Cell: " + table.getSelectedRow() + ", " + table.getSelectedColumn();
                 System.out.println(str);
-                Object value = table.getValueAt(row, col);
+                Object value = table.getValueAt(row == -1 ? 0 : row, col);
                 System.out.println(String.valueOf(value));
                 
             }
@@ -87,15 +88,22 @@ public class Generador extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(26, 292, 863, 304);
         getContentPane().add(scrollPane);
-        JButton button1 = new JButton("Remover fila");
-        button1.addActionListener(new ActionListener() {
+        btnRemoveRow= new JButton("Remover fila");
+        
+        btnRemoveRow.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                if (model.getRowCount() > 0) {
-                    for (int i = model.getRowCount() - 1; i > -1; i--) {
-                        model.removeRow(i);
-                    }
-                }
+            	try {
+            		//final int rowNumber = Integer.parseInt(JOptionPane.showInputDialog("Remover producto #"));
+                    /*if (model.getRowCount() >= 0) {
+                    	model.removeRow(rowNumber-1);
+                    }*/
+            		model.removeRow(table.getSelectedRow());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "No es un número válido");
+				}
+            	
                 System.out.println("model.getRowCount() --->" + model.getRowCount());
             }
         });
@@ -108,11 +116,11 @@ public class Generador extends JFrame {
         });
         JPanel southPanel = new JPanel();
         southPanel.setBounds(12, 608, 877, 41);
-        southPanel.add(button1);
+        southPanel.add(btnRemoveRow);
         southPanel.add(button2);
         getContentPane().add(southPanel);
         
-        btnGenerarCotizacion = new JButton("Generar cotizaciÃ³n");
+        btnGenerarCotizacion = new JButton("Generar cotización");
         southPanel.add(btnGenerarCotizacion);
         
         JPanel panel = new JPanel();
@@ -134,12 +142,12 @@ public class Generador extends JFrame {
         panel.add(lblYourimage);
         
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder((new TitledBorder(null, "CotizaciÃ³n", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
+        panel_1.setBorder((new TitledBorder(null, "Cotización", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
         panel_1.setBounds(668, 12, 221, 146);
         getContentPane().add(panel_1);
         panel_1.setLayout(null);
         
-        JLabel lblCotizacin = new JLabel("NÃºmero");
+        JLabel lblCotizacin = new JLabel("Número");
         lblCotizacin.setForeground(Color.BLUE);
         lblCotizacin.setBounds(12, 52, 66, 27);
         panel_1.add(lblCotizacin);
@@ -150,7 +158,7 @@ public class Generador extends JFrame {
         txtNumberCotizacion.setColumns(10);
         
         JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new TitledBorder(null, "Datos de la empresa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_2.setBorder(new TitledBorder(null, "Datos del cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel_2.setBounds(259, 12, 397, 223);
         getContentPane().add(panel_2);
         panel_2.setLayout(new GridLayout(0, 2));
@@ -159,23 +167,23 @@ public class Generador extends JFrame {
         panel_2.add(lblNombre);
         
         txtEName = new JTextField();
-        txtEName.setText("Empresa S.A");
+        //txtEName.setText("Empresa S.A");
         panel_2.add(txtEName);
         txtEName.setColumns(10);
         
-        JLabel lblResponsable = new JLabel("Responsable");
-        panel_2.add(lblResponsable);
+        JLabel lblAddress = new JLabel("Domicilio");
+        panel_2.add(lblAddress);
         
-        txtResponsable = new JTextField();
-        txtResponsable.setText("Patito suarez");
-        panel_2.add(txtResponsable);
-        txtResponsable.setColumns(10);
+        txtAddress = new JTextField();
+        //txtAddress.setText("Patito suarez");
+        panel_2.add(txtAddress);
+        txtAddress.setColumns(10);
         
-        JLabel lblCorreoElectrnico = new JLabel("Correo electrÃ³nico");
+        JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
         panel_2.add(lblCorreoElectrnico);
         
         txtEmail = new JTextField();
-        txtEmail.setText("abc@gmail.com");
+        //txtEmail.setText("abc@gmail.com");
         panel_2.add(txtEmail);
         txtEmail.setColumns(10);
         
@@ -183,15 +191,15 @@ public class Generador extends JFrame {
         panel_2.add(lblTelefonoDeContacto);
         
         txtPhoneNumber = new JTextField();
-        txtPhoneNumber.setText("9871223872");
+        //txtPhoneNumber.setText("9871223872");
         panel_2.add(txtPhoneNumber);
         txtPhoneNumber.setColumns(10);
         
-        JLabel lblAtendi = new JLabel("AtendiÃ³");
+        JLabel lblAtendi = new JLabel("Atendió");
         panel_2.add(lblAtendi);
         
         txtDoneBy = new JTextField();
-        txtDoneBy.setText("Atendido Jimenze");
+        //txtDoneBy.setText("Atendido Jimenze");
         panel_2.add(txtDoneBy);
         txtDoneBy.setColumns(10);
        
@@ -199,7 +207,7 @@ public class Generador extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         
-        JMenu mnConfiguracin = new JMenu("ConfiguraciÃ³n");
+        JMenu mnConfiguracin = new JMenu("Configuración");
         menuBar.add(mnConfiguracin);
         
         menuDatosDeEmpresa = new JMenuItem("Datos de empresa cotizadora");

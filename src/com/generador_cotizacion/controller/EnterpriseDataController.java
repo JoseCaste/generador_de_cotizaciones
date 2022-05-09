@@ -35,7 +35,7 @@ public class EnterpriseDataController implements ActionListener {
 			final String phone = this.enterpriseData.txtPhone.getText();
 			
 			try {
-				File propertiesData = new File("/home/jose/Documents/PDFs/dataenterprise.xml");
+				File propertiesData = new File("C:\\Users\\Wiliam\\Desktop\\dataenterprise.xml");
 				Properties properties = new Properties();
 				if(!propertiesData.canRead()) 
 					propertiesData.createNewFile(); 
@@ -52,12 +52,12 @@ public class EnterpriseDataController implements ActionListener {
 				
 				properties.storeToXML(fos, "Datos de la empresa cotizadora");
 				
-				JOptionPane.showMessageDialog(null, "Se ha creado la configuraciÃ³n");
+				JOptionPane.showMessageDialog(null, "Se ha creado la configuración");
 				
 				fos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Hubo un error al crear el arhivo de configuraciÃ³n");
+				JOptionPane.showMessageDialog(null, "Hubo un error al crear el arhivo de configuración");
 			}
 		}
 
