@@ -76,7 +76,7 @@ public class CotizacionGenerador {
 			PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 			table.addCell(createImageCell(img));
 			table.addCell(createCentralText().setTextAlignment(TextAlignment.CENTER));
-			table.addCell(createCotizacionCell("Cotización Número", numeroCotizacion).setBold()
+			table.addCell(createCotizacionCell("Cotizaciï¿½n Nï¿½mero", numeroCotizacion).setBold()
 					.setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
 			document.add(table);
 
@@ -114,7 +114,7 @@ public class CotizacionGenerador {
 		 
 
 		String totalInWords = JOptionPane
-				.showInputDialog(String.format("Introduza el valor en palabras (%s)", totalPrice));
+				.showInputDialog(String.format("Introduza el valor en palabras (%s)", totalPrice)).toUpperCase();
 		totalInWords = totalInWords.concat(" 00/100 MXN");
 		
 		document.add(new Paragraph(totalInWords).setVerticalAlignment(VerticalAlignment.BOTTOM).setFontSize(10f)
@@ -140,12 +140,12 @@ public class CotizacionGenerador {
 		table.setBorderRadius(new BorderRadius(50f));
 
 		table.addCell(new Cell().setBorder(null)
-				.add(new Paragraph().add(new Text("Atendió: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
+				.add(new Paragraph().add(new Text("Atendiï¿½: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
 		table.addCell(new Cell().setBorder(null).add(
 				new Paragraph().add(new Text("Cliente: ").setBold()).add(new Text(cotizadoData.getNameEnterprise()))));
 		table.addCell(new Cell().setBorder(null)
 				.add(new Paragraph().add(new Text("Domicilio: ").setBold()).add(new Text(cotizadoData.getaddress()))));
-		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrónico: ").setBold())
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrï¿½nico: ").setBold())
 				.add(new Text(cotizadoData.getEmail()))));
 		table.addCell(new Cell().setBorder(null)
 				.add(new Paragraph().add(new Text("Contacto: ").setBold()).add(new Text(cotizadoData.getPhone()))));
@@ -212,10 +212,10 @@ public class CotizacionGenerador {
 				.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 				.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
 		tableProductos
-				.addCell(simpleCell("CÓDIGO").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+				.addCell(simpleCell("Cï¿½DIGO").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
 		tableProductos
-				.addCell(simpleCell("DESCRIPCIÓN").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+				.addCell(simpleCell("DESCRIPCIï¿½N").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
 		tableProductos
 				.addCell(simpleCell("PRECIO UNIT.")
