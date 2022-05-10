@@ -27,10 +27,8 @@ import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.RoundDotsBorder;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
@@ -41,7 +39,6 @@ import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.BorderRadius;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
-import com.itextpdf.layout.property.VerticalAlignment;
 
 public class CotizacionGenerador {
 
@@ -207,11 +204,6 @@ public class CotizacionGenerador {
 			totalPrice += totalImporte;
 		}
 
-	}
-
-	private double totalWithSale(final double total, final double sale) {
-		double totalImport = total - (total * (sale / 100));
-		return totalImport;
 	}
 
 	private void createHeaders(Table tableProductos) {
