@@ -1,7 +1,7 @@
 package com.generador_cotizacion.enums;
 
 public enum PropertiesKeys {
-	NAME("name"),RESPONSABLE("responsable"),LOCATED_AT("ubicacion"),PHONE("contacto"), PASSWORD("GENERADOR_HUESCA");
+	NAME("name"),RESPONSABLE("responsable"),LOCATED_AT("ubicacion"),PHONE("contacto"), PASSWORD("GENERADOR_HUESCA"),DIR(System.getProperty("user.dir"));
 	
 	private String id;
 	

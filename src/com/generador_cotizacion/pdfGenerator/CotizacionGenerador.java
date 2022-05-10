@@ -3,6 +3,7 @@ package com.generador_cotizacion.pdfGenerator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -54,12 +55,15 @@ public class CotizacionGenerador {
 	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts,
 			final String numeroCotizacion) throws Exception {
 		try {
-			final File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
+			//final File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 			// final File file = new File("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
-			file.getParentFile().mkdir();
+			//file.getParentFile().mkdir();
 			// PdfWriter writer = new PdfWriter("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
-			PdfWriter writer = new PdfWriter("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
+			//PdfWriter writer = new PdfWriter("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 
+			final File file = new File(PropertiesKeys.DIR.getId().concat("/generate.pdf"));
+			file.getParentFile().mkdir();
+			PdfWriter writer = new PdfWriter(PropertiesKeys.DIR.getId().concat("/generate.pdf"));
 			PdfDocument pdf = new PdfDocument(writer);
 
 			Document document = new Document(pdf);
@@ -156,13 +160,15 @@ public class CotizacionGenerador {
 		createProductCell(tableProductos, listProducts);
 
 		document.add(tableProductos);
-		document.add(new Paragraph(String.format("SUBTOTAL                         %s", String.valueOf(totalPrice)))
+		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		
+		final double subTotal = Double.parseDouble(decimalFormat.format(totalPrice/1.16));
+		
+		document.add(new Paragraph(String.format("SUBTOTAL                         %s", decimalFormat.format(subTotal)))
 				.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-		document.add(
-				new Paragraph(String.format("     IVA                         %s", String.valueOf(totalPrice * IVA)))
+		document.add(new Paragraph(String.format("     IVA                         %s", decimalFormat.format((totalPrice - subTotal))))
 						.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-		document.add(new Paragraph(
-				String.format("   TOTAL                         %s", String.valueOf(totalPrice + (totalPrice * IVA))))
+		document.add(new Paragraph(String.format("   TOTAL                         %s", String.valueOf(totalPrice)))
 						.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 	}
 
@@ -259,7 +265,7 @@ public class CotizacionGenerador {
 		Cell cell = new Cell();
 		Properties properties = new Properties();
 		// File file = new File("C:\\Users\\Wiliam\\Desktop\\dataenterprise.xml");
-		File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\dataenterprise.xml");
+		File file = new File(PropertiesKeys.DIR.getId().concat("/dataenterprise.xml"));
 		if (!file.canRead())
 			throw new FileException();
 
@@ -270,12 +276,12 @@ public class CotizacionGenerador {
 			AES256TextEncryptor decrypt = new AES256TextEncryptor();
 			decrypt.setPassword(PropertiesKeys.PASSWORD.getId());
 
-			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setBold());
-			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId())))
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setTextAlignment(TextAlignment.CENTER).setBold());
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId()))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(10f));
-			cell.add(new Paragraph("Tel: " + decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId())))
+			cell.add(new Paragraph("Tel: " + decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(10f));
-			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId())))
+			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(8f));
 
 			fileInputStream.close();
