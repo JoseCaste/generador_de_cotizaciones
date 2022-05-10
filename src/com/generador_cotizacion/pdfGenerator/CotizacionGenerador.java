@@ -3,6 +3,7 @@ package com.generador_cotizacion.pdfGenerator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -54,9 +55,12 @@ public class CotizacionGenerador {
 			final String numeroCotizacion) throws Exception {
 		try {
 
-			final File file = new File(PropertiesKeys.DIR.getId().concat("/generate.pdf"));
+			String url = PropertiesKeys.DIR.getId().concat("/cotizacion-").concat(numeroCotizacion).concat(".pdf");
+			
+			final File file = new File(PropertiesKeys.DIR.getId().concat("/cotizacion-").concat(numeroCotizacion).concat(".pdf"));
 			file.getParentFile().mkdir();
-			PdfWriter writer = new PdfWriter(PropertiesKeys.DIR.getId().concat("/generate.pdf"));
+			
+			PdfWriter writer = new PdfWriter(PropertiesKeys.DIR.getId().concat("/cotizacion-").concat(numeroCotizacion).concat(".pdf"));
 			PdfDocument pdf = new PdfDocument(writer);
 
 			Document document = new Document(pdf);
@@ -94,8 +98,12 @@ public class CotizacionGenerador {
 		} catch (FileException e) {
 			e.printStackTrace();
 			throw e;
-		} catch (Exception e) {
+		}catch (MalformedURLException ex) {
+			ex.printStackTrace();
+			throw new Exception("La ruta de la imágen no existe o ha sido elimadada"); 
+		}catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		return true;
@@ -193,7 +201,7 @@ public class CotizacionGenerador {
 			tableProductos
 					.addCell(simpleCell((String) productFields.get(Elements.DESCRIPTION.getId())).setFontSize(10f));
 			tableProductos.addCell(simpleCell((String) productFields.get(Elements.UNIT_PRICE.getId()))
-					.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
+					.setTextAlignment(TextAlignment.RIGHT).setFontSize(10f));
 
 			final double totalImporte = Double.parseDouble((String) productFields.get(Elements.TOTAL.getId()))
 					* Double.parseDouble((String) productFields.get(Elements.UNIT_PRICE.getId()));
@@ -261,12 +269,12 @@ public class CotizacionGenerador {
 		return cell;
 	}
 
-	public Cell createCentralText() throws FileException {
+	public Cell createCentralText() throws Exception {
 		Cell cell = new Cell();
 		Properties properties = new Properties();
 		File file = new File(PropertiesKeys.DIR.getId().concat("/dataenterprise.xml"));
 		if (!file.canRead())
-			throw new FileException();
+			throw new Exception("El archivo de datos de la empresa no se pudo crear o se encuentra abierto por otro programa");
 
 		try {
 			FileInputStream fileInputStream = new FileInputStream(file);
@@ -290,6 +298,9 @@ public class CotizacionGenerador {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new Exception("No se pudo encontrar el archivo de configuración de la empresa");
+		}catch (NullPointerException e) {
+			throw new Exception("Alguna propiedad de la empresa no ha sido generada, porfavor de crear un archivo nuevo");
 		}
 		cell.setBorder(null);
 		return cell;
