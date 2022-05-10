@@ -33,6 +33,7 @@ public class EnterpriseDataController implements ActionListener {
 			final String responsable = this.enterpriseData.txtResponsable.getText();
 			final String locatedAt = this.enterpriseData.txtLocatedAt.getText();
 			final String phone = this.enterpriseData.txtPhone.getText();
+			final String cp = this.enterpriseData.txtCP.getText();
 			
 			try {
 				File propertiesData = new File(PropertiesKeys.DIR.getId().concat("/dataenterprise.xml"));
@@ -48,6 +49,7 @@ public class EnterpriseDataController implements ActionListener {
 				properties.setProperty(PropertiesKeys.NAME.getId(), encryptor.encrypt(enterpriseName));
 				properties.setProperty(PropertiesKeys.RESPONSABLE.getId(), encryptor.encrypt(responsable));
 				properties.setProperty(PropertiesKeys.LOCATED_AT.getId(), encryptor.encrypt(locatedAt));
+				properties.setProperty(PropertiesKeys.CP.getId(), encryptor.encrypt(cp));
 				properties.setProperty(PropertiesKeys.PHONE.getId(), encryptor.encrypt(phone));
 				
 				properties.storeToXML(fos, "Datos de la empresa cotizadora");

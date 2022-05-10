@@ -20,6 +20,7 @@ public class EnterpriseData {
 	public JTextField txtLocatedAt;
 	public JTextField txtPhone;
 	public JButton btnGuardarDatos;
+	public JTextField txtCP;
 
 	/**
 	 * Create the application.
@@ -57,7 +58,7 @@ public class EnterpriseData {
 		panel.add(txtResponsable);
 		txtResponsable.setColumns(10);
 		
-		JLabel lblUbicacin = new JLabel("Ubicación");
+		JLabel lblUbicacin = new JLabel("Ubicaciï¿½n");
 		panel.add(lblUbicacin);
 		
 		txtLocatedAt = new JTextField();
@@ -70,6 +71,13 @@ public class EnterpriseData {
 		txtPhone = new JTextField();
 		panel.add(txtPhone);
 		txtPhone.setColumns(10);
+		
+		JLabel lblCP = new JLabel("CÃ³digo Postal");
+		panel.add(lblCP);
+		
+		txtCP = new JTextField();
+		panel.add(txtCP);
+		txtCP.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(12, 308, 600, 46);

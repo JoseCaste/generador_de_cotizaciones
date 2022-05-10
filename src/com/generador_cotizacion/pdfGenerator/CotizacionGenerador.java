@@ -278,10 +278,13 @@ public class CotizacionGenerador {
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.NAME.getId()))).setTextAlignment(TextAlignment.CENTER).setBold());
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.RESPONSABLE.getId()))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(10f));
-			cell.add(new Paragraph("Tel: " + decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId()))).setTextAlignment(TextAlignment.CENTER)
+			cell.add(new Paragraph("Tel: ".concat(decrypt.decrypt(properties.getProperty(PropertiesKeys.PHONE.getId())))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(10f));
 			cell.add(new Paragraph(decrypt.decrypt(properties.getProperty(PropertiesKeys.LOCATED_AT.getId()))).setTextAlignment(TextAlignment.CENTER)
 					.setFontSize(8f));
+			cell.add(new Paragraph("CP: ".concat(decrypt.decrypt(properties.getProperty(PropertiesKeys.CP.getId())))).setTextAlignment(TextAlignment.CENTER)
+					.setFontSize(8f));
+			
 
 			fileInputStream.close();
 		} catch (IOException e) {
