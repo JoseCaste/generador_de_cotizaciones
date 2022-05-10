@@ -30,6 +30,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.RoundDotsBorder;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
@@ -55,11 +56,6 @@ public class CotizacionGenerador {
 	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts,
 			final String numeroCotizacion) throws Exception {
 		try {
-			//final File file = new File("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
-			// final File file = new File("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
-			//file.getParentFile().mkdir();
-			// PdfWriter writer = new PdfWriter("C:\\Users\\Wiliam\\Desktop\\generate.pdf");
-			//PdfWriter writer = new PdfWriter("C:\\Users\\Jose\\OneDrive\\Escritorio\\generate.pdf");
 
 			final File file = new File(PropertiesKeys.DIR.getId().concat("/generate.pdf"));
 			file.getParentFile().mkdir();
@@ -109,21 +105,45 @@ public class CotizacionGenerador {
 	}
 
 	private void createBottomText(Document document) {
-		final PdfPage actualPAge = document.getPdfDocument().getLastPage();
-		final PdfDocument pdfDocument = document.getPdfDocument();
-		 
 
 		String totalInWords = JOptionPane
 				.showInputDialog(String.format("Introduza el valor en palabras (%s)", totalPrice)).toUpperCase();
 		totalInWords = totalInWords.concat(" 00/100 MXN");
 		
-		document.add(new Paragraph(totalInWords).setVerticalAlignment(VerticalAlignment.BOTTOM).setFontSize(10f)
-				.setTextAlignment(TextAlignment.CENTER));
-		document.add(new Paragraph("Precios sujetos a cambios sin previo aviso")
-				.setVerticalAlignment(VerticalAlignment.BOTTOM).setFontSize(10f)
-				.setTextAlignment(TextAlignment.CENTER));
-		document.add(new Paragraph("IVA incluido").setFontSize(10f).setVerticalAlignment(VerticalAlignment.BOTTOM)
-				.setTextAlignment(TextAlignment.CENTER));
+		Table table = new Table(UnitValue.createPercentArray(new float[] {25f, 25f}));
+		table.setWidth(UnitValue.createPercentValue(100));
+		
+		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		
+		final double subTotal = Double.parseDouble(decimalFormat.format(totalPrice/1.16));
+		
+		table.addCell(createCell("TOTAL CON LETRA").setFontColor(new DeviceCmyk(1, 1, 1, 1)).setTextAlignment(TextAlignment.CENTER).setBackgroundColor(new DeviceRgb(88, 87, 87)));
+		table.addCell(createCell("DESGLOCE").setFontColor(new DeviceCmyk(1, 1, 1, 1)).setTextAlignment(TextAlignment.CENTER).setBackgroundColor(new DeviceRgb(88, 87, 87)));
+		
+		Table tableLeft = new Table(UnitValue.createPercentArray(new float[] {25f}));
+		tableLeft.setWidth(UnitValue.createPercentValue(100));
+
+		tableLeft.addCell(createCell("(".concat(totalInWords).concat(")")).setTextAlignment(TextAlignment.CENTER));
+		
+		table.addCell(tableLeft);
+		
+		
+		
+		Table tableRight = new Table(UnitValue.createPercentArray(new float[] {25f,25f}));
+		tableRight.setWidth(UnitValue.createPercentValue(100));
+		tableRight.addCell(createCell("SUBTOTAL: "));
+		tableRight.addCell(createCell(decimalFormat.format(subTotal)));
+		tableRight.addCell(createCell("IVA: "));
+		tableRight.addCell(createCell(decimalFormat.format((totalPrice - subTotal))));
+		tableRight.addCell(createCell("TOTAL: "));
+		tableRight.addCell(createCell(String.valueOf(totalPrice)));
+		
+		table.addCell(tableRight);
+		
+		for (int i = 0; i < 15-data.size(); i++) 
+			document.add(new Paragraph("\n"));
+		
+		document.add(table);
 	}
 
 	private void createCotizadoTable(Document document, CotizadoData cotizadoData) {
@@ -160,16 +180,6 @@ public class CotizacionGenerador {
 		createProductCell(tableProductos, listProducts);
 
 		document.add(tableProductos);
-		DecimalFormat decimalFormat = new DecimalFormat("#.##");
-		
-		final double subTotal = Double.parseDouble(decimalFormat.format(totalPrice/1.16));
-		
-		document.add(new Paragraph(String.format("SUBTOTAL                         %s", decimalFormat.format(subTotal)))
-				.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-		document.add(new Paragraph(String.format("     IVA                         %s", decimalFormat.format((totalPrice - subTotal))))
-						.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
-		document.add(new Paragraph(String.format("   TOTAL                         %s", String.valueOf(totalPrice)))
-						.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 	}
 
 	private void createProductCell(Table tableProductos, final Vector<?> listVector) {
@@ -191,8 +201,6 @@ public class CotizacionGenerador {
 			final double totalImporte = Double.parseDouble((String) productFields.get(Elements.TOTAL.getId()))
 					* Double.parseDouble((String) productFields.get(Elements.UNIT_PRICE.getId()));
 
-			// final double totalwithSale = totalWithSale(totalImporte,
-			// Integer.parseInt((String)productFields.get(Elements.SALE.getId())));
 			tableProductos.addCell(
 					simpleCell(String.valueOf(totalImporte)).setTextAlignment(TextAlignment.RIGHT).setFontSize(10f));
 
@@ -264,7 +272,6 @@ public class CotizacionGenerador {
 	public Cell createCentralText() throws FileException {
 		Cell cell = new Cell();
 		Properties properties = new Properties();
-		// File file = new File("C:\\Users\\Wiliam\\Desktop\\dataenterprise.xml");
 		File file = new File(PropertiesKeys.DIR.getId().concat("/dataenterprise.xml"));
 		if (!file.canRead())
 			throw new FileException();
