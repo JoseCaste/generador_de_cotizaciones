@@ -108,15 +108,16 @@ public class CotizacionGenerador {
 	}
 
 	private void createBottomText(Document document) {
-
-		String totalInWords = JOptionPane
-				.showInputDialog(String.format("Introduza el valor en palabras (%s)", totalPrice)).toUpperCase();
-		totalInWords = totalInWords.concat(" 00/100 MXN");
 		
 		Table table = new Table(UnitValue.createPercentArray(new float[] {25f, 25f}));
 		table.setWidth(UnitValue.createPercentValue(100));
 		
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		
+		String totalInWords = JOptionPane
+				.showInputDialog(String.format("Introduza el valor en palabras (%s)", decimalFormat.format(totalPrice))).toUpperCase();
+		totalInWords = totalInWords.concat(" 00/100 MXN");
+		
 		
 		final double subTotal = Double.parseDouble(decimalFormat.format(totalPrice/1.16));
 		
@@ -139,7 +140,7 @@ public class CotizacionGenerador {
 		tableRight.addCell(createCell("IVA: "));
 		tableRight.addCell(createCell(decimalFormat.format((totalPrice - subTotal))));
 		tableRight.addCell(createCell("TOTAL: "));
-		tableRight.addCell(createCell(String.valueOf(totalPrice)));
+		tableRight.addCell(createCell(decimalFormat.format(totalPrice)));
 		
 		table.addCell(tableRight);
 		
@@ -177,7 +178,7 @@ public class CotizacionGenerador {
 	}
 
 	private void createTableWithProducts(final Vector<?> listProducts, Document document) {
-		Table tableProductos = new Table(UnitValue.createPercentArray(new float[] { 60f, 60f, 60f, 60f, 60f, 60f }));
+		Table tableProductos = new Table(UnitValue.createPercentArray(new float[] { 10f, 60f, 60f, 80f, 60f, 60f }));
 		tableProductos.setWidth(UnitValue.createPercentValue(100));
 		createHeaders(tableProductos);
 		createProductCell(tableProductos, listProducts);
@@ -192,20 +193,20 @@ public class CotizacionGenerador {
 		for (Object object : listVector) {
 
 			Vector<?> productFields = (Vector<?>) object;
-			tableProductos.addCell(simpleCell((String) productFields.get(Elements.TOTAL.getId())).setFontSize(10f));
+			tableProductos.addCell(createCell((String) productFields.get(Elements.TOTAL.getId())).setFontSize(8f));
 			tableProductos
-					.addCell(simpleCell((String) productFields.get(Elements.UNIDAD_MEDIDA.getId())).setFontSize(10f));
-			tableProductos.addCell(simpleCell((String) productFields.get(Elements.CODIGO.getId())).setFontSize(10f));
+					.addCell(createCell((String) productFields.get(Elements.UNIDAD_MEDIDA.getId())).setFontSize(8f));
+			tableProductos.addCell(createCell((String) productFields.get(Elements.CODIGO.getId())).setFontSize(8f));
 			tableProductos
-					.addCell(simpleCell((String) productFields.get(Elements.DESCRIPTION.getId())).setFontSize(10f));
-			tableProductos.addCell(simpleCell((String) productFields.get(Elements.UNIT_PRICE.getId()))
-					.setTextAlignment(TextAlignment.RIGHT).setFontSize(10f));
+					.addCell(createCell((String) productFields.get(Elements.DESCRIPTION.getId())).setFontSize(8f));
+			tableProductos.addCell(createCell("$".concat((String) productFields.get(Elements.UNIT_PRICE.getId())))
+					.setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 
 			final double totalImporte = Double.parseDouble((String) productFields.get(Elements.TOTAL.getId()))
 					* Double.parseDouble((String) productFields.get(Elements.UNIT_PRICE.getId()));
 
 			tableProductos.addCell(
-					simpleCell(String.valueOf(totalImporte)).setTextAlignment(TextAlignment.RIGHT).setFontSize(10f));
+					createCell("$".concat(new DecimalFormat("#.##").format(totalImporte))).setTextAlignment(TextAlignment.RIGHT).setFontSize(8f));
 
 			totalPrice += totalImporte;
 		}
@@ -214,25 +215,25 @@ public class CotizacionGenerador {
 
 	private void createHeaders(Table tableProductos) {
 		tableProductos
-				.addCell(simpleCell("CANTIDAD").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
-		tableProductos.addCell(simpleCell("UNIDAD DE MEDIDA").setBold()
+				.addCell(simpleCell("CANT.").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
+		tableProductos.addCell(simpleCell("UNIDAD \nDE \nMEDIDA").setBold()
 				.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-				.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
+				.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
 				.addCell(simpleCell("C�DIGO").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
+						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
-				.addCell(simpleCell("DESCRIPCI�N").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f));
+				.addCell(simpleCell("DESCRIPCI�N      ").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
-				.addCell(simpleCell("PRECIO UNIT.")
+				.addCell(simpleCell("PRECIO \nUNIT.")
 						.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f))
+						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f))
 				.setTextAlignment(TextAlignment.RIGHT);
 		tableProductos
 				.addCell(simpleCell("IMPORTE").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
-						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(10f))
+						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f))
 				.setTextAlignment(TextAlignment.RIGHT);
 
 	}

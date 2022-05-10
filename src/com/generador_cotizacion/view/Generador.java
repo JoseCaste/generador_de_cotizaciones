@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U."};
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Cï¿½digo","Descripciï¿½n", "Precio U."};
     public Object[][] data = {
         {"","", "","",""}
     };
@@ -93,18 +93,9 @@ public class Generador extends JFrame {
         btnRemoveRow.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-            	try {
-            		//final int rowNumber = Integer.parseInt(JOptionPane.showInputDialog("Remover producto #"));
-                    /*if (model.getRowCount() >= 0) {
-                    	model.removeRow(rowNumber-1);
-                    }*/
-            		model.removeRow(table.getSelectedRow());
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "No es un número válido");
-				}
-            	
-                System.out.println("model.getRowCount() --->" + model.getRowCount());
+            	model.removeRow(table.getSelectedRow());
+                
+            	System.out.println("model.getRowCount() --->" + model.getRowCount());
             }
         });
         JButton button2 = new JButton("Agregar fila");
@@ -120,7 +111,7 @@ public class Generador extends JFrame {
         southPanel.add(button2);
         getContentPane().add(southPanel);
         
-        btnGenerarCotizacion = new JButton("Generar cotización");
+        btnGenerarCotizacion = new JButton("Generar cotizaciï¿½n");
         southPanel.add(btnGenerarCotizacion);
         
         JPanel panel = new JPanel();
@@ -142,12 +133,12 @@ public class Generador extends JFrame {
         panel.add(lblYourimage);
         
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder((new TitledBorder(null, "Cotización", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
+        panel_1.setBorder((new TitledBorder(null, "Cotizaciï¿½n", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
         panel_1.setBounds(668, 12, 221, 146);
         getContentPane().add(panel_1);
         panel_1.setLayout(null);
         
-        JLabel lblCotizacin = new JLabel("Número");
+        JLabel lblCotizacin = new JLabel("Nï¿½mero");
         lblCotizacin.setForeground(Color.BLUE);
         lblCotizacin.setBounds(12, 52, 66, 27);
         panel_1.add(lblCotizacin);
@@ -179,7 +170,7 @@ public class Generador extends JFrame {
         panel_2.add(txtAddress);
         txtAddress.setColumns(10);
         
-        JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
+        JLabel lblCorreoElectrnico = new JLabel("Correo electrï¿½nico");
         panel_2.add(lblCorreoElectrnico);
         
         txtEmail = new JTextField();
@@ -195,7 +186,7 @@ public class Generador extends JFrame {
         panel_2.add(txtPhoneNumber);
         txtPhoneNumber.setColumns(10);
         
-        JLabel lblAtendi = new JLabel("Atendió");
+        JLabel lblAtendi = new JLabel("Atendiï¿½");
         panel_2.add(lblAtendi);
         
         txtDoneBy = new JTextField();
@@ -207,7 +198,7 @@ public class Generador extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         
-        JMenu mnConfiguracin = new JMenu("Configuración");
+        JMenu mnConfiguracin = new JMenu("Configuraciï¿½n");
         menuBar.add(mnConfiguracin);
         
         menuDatosDeEmpresa = new JMenuItem("Datos de empresa cotizadora");

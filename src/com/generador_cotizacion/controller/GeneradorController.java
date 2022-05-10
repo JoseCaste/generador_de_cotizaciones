@@ -83,8 +83,10 @@ public class GeneradorController implements ActionListener {
 					generador.txtNumberCotizacion.getText());
 			JOptionPane.showMessageDialog(null, "La cotizaci�n se ha creado con �xito");
 			
-			if(JOptionPane.showConfirmDialog(null, "¿Borrar los datos de esta tabla?") == JOptionPane.OK_OPTION) {
-				
+			if(JOptionPane.showConfirmDialog(null, "¿Borrar los datos de esta tabla?","Seleccione una opcion",JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+				for (int i = this.generador.model.getRowCount() - 1; i >=0 ; i--) {
+					this.generador.model.removeRow(i);
+                }
 			}
 			
 		} catch (Exception e) {
