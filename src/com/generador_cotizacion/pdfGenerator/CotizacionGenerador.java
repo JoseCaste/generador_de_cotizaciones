@@ -54,8 +54,6 @@ public class CotizacionGenerador {
 	public boolean createPDF(final String imagePath, final CotizadoData enterprise, final Vector<?> listProducts,
 			final String numeroCotizacion) throws Exception {
 		try {
-
-			String url = PropertiesKeys.DIR.getId().concat("/cotizacion-").concat(numeroCotizacion).concat(".pdf");
 			
 			final File file = new File(PropertiesKeys.DIR.getId().concat("/cotizacion-").concat(numeroCotizacion).concat(".pdf"));
 			file.getParentFile().mkdir();
