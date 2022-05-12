@@ -3,6 +3,9 @@ package com.generador_cotizacion.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.LineBorder;
@@ -35,6 +38,8 @@ public class Generador extends JFrame {
 	public JButton btnGenerarCotizacion;
 	public JMenuItem menuDatosDeEmpresa;
 	public JButton btnRemoveRow;
+	
+	public static int SUPRIMIR_KEY = 127;
 
     public Generador() {
     	setIconImage(Toolkit.getDefaultToolkit().getImage(Generador.class.getResource("/com/generador_cotizacion/resources/logo.png")));
@@ -161,6 +166,23 @@ public class Generador extends JFrame {
                 return c;
             }
         };
+        
+        table.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				super.keyPressed(e);
+				
+				if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER)
+					updateCol();
+				
+				if(e.getKeyCode() == SUPRIMIR_KEY)
+					model.removeRow(table.getSelectedRow());;
+					
+			}
+        	
+		});
         ListSelectionModel rowSelMod = table.getSelectionModel();
         
         table.setPreferredScrollableViewportSize(table.getPreferredSize());
@@ -223,7 +245,6 @@ public class Generador extends JFrame {
                 
             }
         });
-       
         
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
