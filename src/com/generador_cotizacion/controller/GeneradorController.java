@@ -81,9 +81,9 @@ public class GeneradorController implements ActionListener {
 		try {
 			cotizacionGenerador.createPDF(imagePath, enterprise, data,
 					generador.txtNumberCotizacion.getText());
-			JOptionPane.showMessageDialog(null, "La cotizaciï¿½n se ha creado con ï¿½xito");
+			JOptionPane.showMessageDialog(null, "La cotización se ha creado con éxito");
 			
-			if(JOptionPane.showConfirmDialog(null, "Â¿Borrar los datos de esta tabla?","Seleccione una opcion",JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+			if(JOptionPane.showConfirmDialog(null, "¿Borrar los datos de esta tabla?","Seleccione una opcion",JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				for (int i = this.generador.model.getRowCount() - 1; i >=0 ; i--) {
 					this.generador.model.removeRow(i);
                 }
@@ -115,14 +115,14 @@ public class GeneradorController implements ActionListener {
 
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				throw new ExceptionConvert(String.format("La cantidad del producto con nombre %s no es un nï¿½mero vï¿½lido", (String) fields.get(Elements.CODIGO.getId())));
+				throw new ExceptionConvert(String.format("La cantidad del producto con nombre %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())));
 			}
 
 			try {
 				product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				throw new ExceptionConvert(String.format("El precio unitario del producto %s no es un nï¿½mero vï¿½lido", (String) fields.get(Elements.CODIGO.getId())));
+				throw new ExceptionConvert(String.format("El precio unitario del producto %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())));
 			}
 
 		}

@@ -71,7 +71,7 @@ public class CotizacionGenerador {
 			PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 			table.addCell(createImageCell(img));
 			table.addCell(createCentralText().setTextAlignment(TextAlignment.CENTER));
-			table.addCell(createCotizacionCell("Cotizaciï¿½n Nï¿½mero", numeroCotizacion).setBold()
+			table.addCell(createCotizacionCell("Cotización Número", numeroCotizacion).setBold()
 					.setBorder(new RoundDotsBorder(1)).setFont(font).setFontSize(13f));
 			document.add(table);
 
@@ -98,7 +98,7 @@ public class CotizacionGenerador {
 			throw e;
 		}catch (MalformedURLException ex) {
 			ex.printStackTrace();
-			throw new Exception("La ruta de la imÃ¡gen no existe o ha sido elimadada"); 
+			throw new Exception("La ruta de la imágen no existe o ha sido eliminada"); 
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -164,12 +164,12 @@ public class CotizacionGenerador {
 		table.setBorderRadius(new BorderRadius(50f));
 
 		table.addCell(new Cell().setBorder(null)
-				.add(new Paragraph().add(new Text("Atendiï¿½: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
+				.add(new Paragraph().add(new Text("Atendió: ").setBold()).add(new Text(cotizadoData.getAtendidoBy()))));
 		table.addCell(new Cell().setBorder(null).add(
 				new Paragraph().add(new Text("Cliente: ").setBold()).add(new Text(cotizadoData.getNameEnterprise()))));
 		table.addCell(new Cell().setBorder(null)
 				.add(new Paragraph().add(new Text("Domicilio: ").setBold()).add(new Text(cotizadoData.getaddress()))));
-		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrï¿½nico: ").setBold())
+		table.addCell(new Cell().setBorder(null).add(new Paragraph().add(new Text("Correo electrónico: ").setBold())
 				.add(new Text(cotizadoData.getEmail()))));
 		table.addCell(new Cell().setBorder(null)
 				.add(new Paragraph().add(new Text("Contacto: ").setBold()).add(new Text(cotizadoData.getPhone()))));
@@ -221,10 +221,10 @@ public class CotizacionGenerador {
 				.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 				.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
-				.addCell(simpleCell("Cï¿½DIGO").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+				.addCell(simpleCell("CÓDIGO").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
-				.addCell(simpleCell("DESCRIPCIï¿½N      ").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
+				.addCell(simpleCell("DESCRIPCIÓN      ").setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(88, 87, 87)))
 						.setFontColor(Color.convertCmykToRgb(new DeviceCmyk(1, 1, 1, 1)), 1).setBold().setFontSize(8f));
 		tableProductos
 				.addCell(simpleCell("PRECIO \nUNIT.")
@@ -297,7 +297,7 @@ public class CotizacionGenerador {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new Exception("No se pudo encontrar el archivo de configuraciÃ³n de la empresa");
+			throw new Exception("No se pudo encontrar el archivo de configuración de la empresa");
 		}catch (NullPointerException e) {
 			throw new Exception("Alguna propiedad de la empresa no ha sido generada, porfavor de crear un archivo nuevo");
 		}

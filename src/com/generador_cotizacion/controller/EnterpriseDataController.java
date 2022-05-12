@@ -54,12 +54,12 @@ public class EnterpriseDataController implements ActionListener {
 				
 				properties.storeToXML(fos, "Datos de la empresa cotizadora");
 				
-				JOptionPane.showMessageDialog(null, "Se ha creado la configuraciï¿½n");
+				JOptionPane.showMessageDialog(null, "Se ha creado la configuración");
 				
 				fos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Hubo un error al crear el arhivo de configuraciï¿½n");
+				JOptionPane.showMessageDialog(null, "Hubo un error al crear el arhivo de configuración");
 			}
 		}
 
