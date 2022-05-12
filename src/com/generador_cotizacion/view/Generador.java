@@ -303,6 +303,7 @@ public class Generador extends JFrame {
                 frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setBounds(200, 250, 950, 700);
+                frame.setExtendedState(MAXIMIZED_BOTH);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
