@@ -123,7 +123,7 @@ public class Generador extends JFrame {
         btnSeleccionarImagen = new JButton("Seleccionar imagen");
         btnSeleccionarImagen.setBounds(12, 208, 197, 25);
         final ImageIcon iconFolder = new ImageIcon(
-				new ImageIcon(Generador_.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
 						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		btnSeleccionarImagen.setIcon(iconFolder);
         panel.add(btnSeleccionarImagen);
