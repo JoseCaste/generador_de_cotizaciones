@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 public class Generador extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private Object[] columnNames = {"Cantidad", "Unidad de medida","Cï¿½digo","Descripciï¿½n", "Precio U."};
+    private Object[] columnNames = {"Cantidad", "Unidad de medida","Código","Descripción", "Precio U."};
     public Object[][] data = {
         {"","", "","",""}
     };
@@ -113,7 +113,7 @@ public class Generador extends JFrame {
         southPanel.add(button2);
         getContentPane().add(southPanel);
         
-        btnGenerarCotizacion = new JButton("Generar cotizaciï¿½n");
+        btnGenerarCotizacion = new JButton("Generar cotización");
         southPanel.add(btnGenerarCotizacion);
         
         JPanel panel = new JPanel();
@@ -125,7 +125,7 @@ public class Generador extends JFrame {
         btnSeleccionarImagen = new JButton("Seleccionar imagen");
         btnSeleccionarImagen.setBounds(12, 208, 197, 25);
         final ImageIcon iconFolder = new ImageIcon(
-				new ImageIcon(Generador_.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
 						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		btnSeleccionarImagen.setIcon(iconFolder);
         panel.add(btnSeleccionarImagen);
@@ -135,12 +135,12 @@ public class Generador extends JFrame {
         panel.add(lblYourimage);
         
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder((new TitledBorder(null, "Cotizaciï¿½n", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
+        panel_1.setBorder((new TitledBorder(null, "Cotización", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
         panel_1.setBounds(668, 12, 221, 146);
         getContentPane().add(panel_1);
         panel_1.setLayout(null);
         
-        JLabel lblCotizacin = new JLabel("Nï¿½mero");
+        JLabel lblCotizacin = new JLabel("Número");
         lblCotizacin.setForeground(Color.BLUE);
         lblCotizacin.setBounds(12, 52, 66, 27);
         panel_1.add(lblCotizacin);
@@ -172,7 +172,7 @@ public class Generador extends JFrame {
         panel_2.add(txtAddress);
         txtAddress.setColumns(10);
         
-        JLabel lblCorreoElectrnico = new JLabel("Correo electrï¿½nico");
+        JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
         panel_2.add(lblCorreoElectrnico);
         
         txtEmail = new JTextField();
@@ -188,7 +188,7 @@ public class Generador extends JFrame {
         panel_2.add(txtPhoneNumber);
         txtPhoneNumber.setColumns(10);
         
-        JLabel lblAtendi = new JLabel("Atendiï¿½");
+        JLabel lblAtendi = new JLabel("Atendió");
         panel_2.add(lblAtendi);
         
         txtDoneBy = new JTextField();
@@ -200,7 +200,7 @@ public class Generador extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         
-        JMenu mnConfiguracin = new JMenu("Configuraciï¿½n");
+        JMenu mnConfiguracin = new JMenu("Configuración");
         menuBar.add(mnConfiguracin);
         
         menuDatosDeEmpresa = new JMenuItem("Datos de empresa cotizadora");

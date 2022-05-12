@@ -58,7 +58,7 @@ public class EnterpriseData {
 		panel.add(txtResponsable);
 		txtResponsable.setColumns(10);
 		
-		JLabel lblUbicacin = new JLabel("Ubicaciï¿½n");
+		JLabel lblUbicacin = new JLabel("Ubicación");
 		panel.add(lblUbicacin);
 		
 		txtLocatedAt = new JTextField();
@@ -72,7 +72,7 @@ public class EnterpriseData {
 		panel.add(txtPhone);
 		txtPhone.setColumns(10);
 		
-		JLabel lblCP = new JLabel("CÃ³digo Postal");
+		JLabel lblCP = new JLabel("Código Postal");
 		panel.add(lblCP);
 		
 		txtCP = new JTextField();
