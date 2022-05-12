@@ -37,6 +37,8 @@ public class Generador extends JFrame {
 	public JButton btnRemoveRow;
 
     public Generador() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(Generador.class.getResource("/com/generador_cotizacion/resources/logo.png")));
+    	setTitle("Generador de cotizaciones");
         model = new DefaultTableModel(data, columnNames) {
 
             private static final long serialVersionUID = 1L;
