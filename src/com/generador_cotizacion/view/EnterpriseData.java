@@ -34,7 +34,7 @@ public class EnterpriseData {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 763, 382);
+		frame.setBounds(100, 100, 763, 303);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(new GridLayout(0, 1));
 		
