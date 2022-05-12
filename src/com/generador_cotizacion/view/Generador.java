@@ -78,8 +78,8 @@ public class Generador extends JFrame {
                 }
                 str += "Selected Cell: " + table.getSelectedRow() + ", " + table.getSelectedColumn();
                 System.out.println(str);
-                Object value = table.getValueAt(row == -1 ? 0 : row, col);
-                System.out.println(String.valueOf(value));
+                /*Object value = table.getValueAt(row == -1 ? 0 : row, col);
+                System.out.println(String.valueOf(value));*/
                 
             }
         });
