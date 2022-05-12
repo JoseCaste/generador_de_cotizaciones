@@ -49,6 +49,105 @@ public class Generador extends JFrame {
                 return getValueAt(0, column).getClass();
             }
         };
+        final ImageIcon iconGenerate = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/create_pdf_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        final ImageIcon iconFolder = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        
+        final ImageIcon iconRemove = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/delete_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        final ImageIcon iconAdd = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/add-file_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+        
+        JPanel panel_header = new JPanel();
+        getContentPane().add(panel_header);
+        panel_header.setLayout(new GridLayout(0, 3, 0, 0));
+        
+        JPanel panel_logo = new JPanel();
+        panel_header.add(panel_logo);
+        panel_logo.setBorder(new TitledBorder(null, "Logo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_logo.setLayout(new GridLayout(0, 1, 0, 25));
+        
+        JPanel panel = new JPanel();
+        panel_logo.add(panel);
+        panel.setLayout(null);
+        
+        lblYourimage = new JLabel("");
+        lblYourimage.setBounds(38, 0, 227, 66);
+        panel.add(lblYourimage);
+        
+        btnSeleccionarImagen = new JButton("Seleccionar imagen");
+        btnSeleccionarImagen.setIcon(iconFolder);
+        panel_logo.add(btnSeleccionarImagen);
+        
+        JPanel panel_data_client = new JPanel();
+        panel_header.add(panel_data_client);
+        panel_data_client.setBorder(new TitledBorder(null, "Datos del cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_data_client.setLayout(new GridLayout(0, 2));
+        
+        JLabel lblNombre = new JLabel("Nombre");
+        panel_data_client.add(lblNombre);
+        
+        txtEName = new JTextField();
+        //txtEName.setText("Empresa S.A");
+        panel_data_client.add(txtEName);
+        txtEName.setColumns(10);
+        
+        JLabel lblAddress = new JLabel("Domicilio");
+        panel_data_client.add(lblAddress);
+        
+        txtAddress = new JTextField();
+        //txtAddress.setText("Patito suarez");
+        panel_data_client.add(txtAddress);
+        txtAddress.setColumns(10);
+        
+        JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
+        panel_data_client.add(lblCorreoElectrnico);
+        
+        txtEmail = new JTextField();
+        //txtEmail.setText("abc@gmail.com");
+        panel_data_client.add(txtEmail);
+        txtEmail.setColumns(10);
+        
+        JLabel lblTelefonoDeContacto = new JLabel("Telefono de contacto");
+        panel_data_client.add(lblTelefonoDeContacto);
+        
+        txtPhoneNumber = new JTextField();
+        //txtPhoneNumber.setText("9871223872");
+        panel_data_client.add(txtPhoneNumber);
+        txtPhoneNumber.setColumns(10);
+        
+        JLabel lblAtendi = new JLabel("Atendió");
+        panel_data_client.add(lblAtendi);
+        
+        txtDoneBy = new JTextField();
+        //txtDoneBy.setText("Atendido Jimenze");
+        panel_data_client.add(txtDoneBy);
+        txtDoneBy.setColumns(10);
+        
+        JPanel panel_cotizacion_number = new JPanel();
+        panel_header.add(panel_cotizacion_number);
+        panel_cotizacion_number.setBorder((new TitledBorder(null, "Cotización", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
+        panel_cotizacion_number.setLayout(null);
+        
+        JLabel lblCotizacin = new JLabel("Número");
+        lblCotizacin.setForeground(Color.BLUE);
+        lblCotizacin.setBounds(12, 52, 66, 27);
+        panel_cotizacion_number.add(lblCotizacin);
+        
+        txtNumberCotizacion = new JTextField();
+        txtNumberCotizacion.setBounds(79, 52, 114, 27);
+        panel_cotizacion_number.add(txtNumberCotizacion);
+        txtNumberCotizacion.setColumns(10);
+        
+        JPanel panel_product_table = new JPanel();
+        getContentPane().add(panel_product_table);
+        panel_product_table.setLayout(new GridLayout(0, 1, 2, 100));
         table = new JTable(model) {
 
             private static final long serialVersionUID = 1L;
@@ -63,6 +162,45 @@ public class Generador extends JFrame {
             }
         };
         ListSelectionModel rowSelMod = table.getSelectionModel();
+        
+        table.setPreferredScrollableViewportSize(table.getPreferredSize());
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(26, 282, 873, 304);
+        //getContentPane().add(scrollPane);
+        
+        panel_product_table.add(scrollPane);
+        btnRemoveRow= new JButton("Remover fila");
+        btnRemoveRow.setIcon(iconRemove);
+        
+        btnRemoveRow.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+            	model.removeRow(table.getSelectedRow());
+                
+            	System.out.println("model.getRowCount() --->" + model.getRowCount());
+            }
+        });
+        JButton add_rows = new JButton("Agregar fila");
+        add_rows.setIcon(iconAdd);
+        add_rows.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent arg0) {
+            	 updateCol();
+            }
+        });
+        JPanel panel_buttons = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel_buttons.getLayout();
+        panel_buttons.add(btnRemoveRow);
+        panel_buttons.add(add_rows);
+        getContentPane().add(panel_buttons);
+        
+        btnGenerarCotizacion = new JButton("Generar cotización");
+        btnGenerarCotizacion.setIcon(iconGenerate);
+        panel_buttons.add(btnGenerarCotizacion);
+        
+        JLabel label = new JLabel("");
+        getContentPane().add(label);
+        
         rowSelMod.addListSelectionListener(new ListSelectionListener() {
 
             public void valueChanged(ListSelectionEvent e) {
@@ -85,128 +223,6 @@ public class Generador extends JFrame {
                 
             }
         });
-        getContentPane().setLayout(null);
-        table.setPreferredScrollableViewportSize(table.getPreferredSize());
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(26, 292, 863, 304);
-        getContentPane().add(scrollPane);
-        btnRemoveRow= new JButton("Remover fila");
-        final ImageIcon iconRemove = new ImageIcon(
-				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/delete_icon.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        btnRemoveRow.setIcon(iconRemove);
-        
-        btnRemoveRow.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-            	model.removeRow(table.getSelectedRow());
-                
-            	System.out.println("model.getRowCount() --->" + model.getRowCount());
-            }
-        });
-        JButton button2 = new JButton("Agregar fila");
-        final ImageIcon iconAdd = new ImageIcon(
-				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/add-file_icon.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        button2.setIcon(iconAdd);
-        button2.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent arg0) {
-            	 updateCol();
-            }
-        });
-        JPanel southPanel = new JPanel();
-        southPanel.setBounds(12, 608, 877, 41);
-        southPanel.add(btnRemoveRow);
-        southPanel.add(button2);
-        getContentPane().add(southPanel);
-        
-        btnGenerarCotizacion = new JButton("Generar cotización");
-        final ImageIcon iconGenerate = new ImageIcon(
-				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/create_pdf_icon.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        btnGenerarCotizacion.setIcon(iconGenerate);
-        southPanel.add(btnGenerarCotizacion);
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBorder(new TitledBorder(null, "Logo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel.setBounds(26, 12, 221, 258);
-        getContentPane().add(panel);
-        
-        btnSeleccionarImagen = new JButton("Seleccionar imagen");
-        btnSeleccionarImagen.setBounds(12, 208, 197, 25);
-        final ImageIcon iconFolder = new ImageIcon(
-				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/folder-yellow-icon.png"))
-						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-		btnSeleccionarImagen.setIcon(iconFolder);
-        panel.add(btnSeleccionarImagen);
-        
-        lblYourimage = new JLabel("");
-        lblYourimage.setBounds(12, 24, 197, 172);
-        panel.add(lblYourimage);
-        
-        JPanel panel_1 = new JPanel();
-        panel_1.setBorder((new TitledBorder(null, "Cotización", TitledBorder.LEADING, TitledBorder.TOP, null, null)));
-        panel_1.setBounds(668, 12, 221, 146);
-        getContentPane().add(panel_1);
-        panel_1.setLayout(null);
-        
-        JLabel lblCotizacin = new JLabel("Número");
-        lblCotizacin.setForeground(Color.BLUE);
-        lblCotizacin.setBounds(12, 52, 66, 27);
-        panel_1.add(lblCotizacin);
-        
-        txtNumberCotizacion = new JTextField();
-        txtNumberCotizacion.setBounds(79, 52, 114, 27);
-        panel_1.add(txtNumberCotizacion);
-        txtNumberCotizacion.setColumns(10);
-        
-        JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new TitledBorder(null, "Datos del cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel_2.setBounds(259, 12, 397, 223);
-        getContentPane().add(panel_2);
-        panel_2.setLayout(new GridLayout(0, 2));
-        
-        JLabel lblNombre = new JLabel("Nombre");
-        panel_2.add(lblNombre);
-        
-        txtEName = new JTextField();
-        //txtEName.setText("Empresa S.A");
-        panel_2.add(txtEName);
-        txtEName.setColumns(10);
-        
-        JLabel lblAddress = new JLabel("Domicilio");
-        panel_2.add(lblAddress);
-        
-        txtAddress = new JTextField();
-        //txtAddress.setText("Patito suarez");
-        panel_2.add(txtAddress);
-        txtAddress.setColumns(10);
-        
-        JLabel lblCorreoElectrnico = new JLabel("Correo electrónico");
-        panel_2.add(lblCorreoElectrnico);
-        
-        txtEmail = new JTextField();
-        //txtEmail.setText("abc@gmail.com");
-        panel_2.add(txtEmail);
-        txtEmail.setColumns(10);
-        
-        JLabel lblTelefonoDeContacto = new JLabel("Telefono de contacto");
-        panel_2.add(lblTelefonoDeContacto);
-        
-        txtPhoneNumber = new JTextField();
-        //txtPhoneNumber.setText("9871223872");
-        panel_2.add(txtPhoneNumber);
-        txtPhoneNumber.setColumns(10);
-        
-        JLabel lblAtendi = new JLabel("Atendió");
-        panel_2.add(lblAtendi);
-        
-        txtDoneBy = new JTextField();
-        //txtDoneBy.setText("Atendido Jimenze");
-        panel_2.add(txtDoneBy);
-        txtDoneBy.setColumns(10);
        
         
         JMenuBar menuBar = new JMenuBar();
