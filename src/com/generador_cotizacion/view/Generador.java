@@ -91,6 +91,10 @@ public class Generador extends JFrame {
         scrollPane.setBounds(26, 292, 863, 304);
         getContentPane().add(scrollPane);
         btnRemoveRow= new JButton("Remover fila");
+        final ImageIcon iconRemove = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/delete_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        btnRemoveRow.setIcon(iconRemove);
         
         btnRemoveRow.addActionListener(new ActionListener() {
 
@@ -101,6 +105,10 @@ public class Generador extends JFrame {
             }
         });
         JButton button2 = new JButton("Agregar fila");
+        final ImageIcon iconAdd = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/add-file_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        button2.setIcon(iconAdd);
         button2.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
@@ -114,6 +122,10 @@ public class Generador extends JFrame {
         getContentPane().add(southPanel);
         
         btnGenerarCotizacion = new JButton("Generar cotización");
+        final ImageIcon iconGenerate = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/create_pdf_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        btnGenerarCotizacion.setIcon(iconGenerate);
         southPanel.add(btnGenerarCotizacion);
         
         JPanel panel = new JPanel();
@@ -201,9 +213,17 @@ public class Generador extends JFrame {
         setJMenuBar(menuBar);
         
         JMenu mnConfiguracin = new JMenu("Configuración");
+        final ImageIcon iconSettings = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/settings_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        mnConfiguracin.setIcon(iconSettings);
         menuBar.add(mnConfiguracin);
         
         menuDatosDeEmpresa = new JMenuItem("Datos de empresa cotizadora");
+        final ImageIcon iconEnterpriseSettings = new ImageIcon(
+				new ImageIcon(Generador.class.getResource("/com/generador_cotizacion/resources/enterprise_icon.png"))
+						.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        menuDatosDeEmpresa.setIcon(iconEnterpriseSettings);
         mnConfiguracin.add(menuDatosDeEmpresa);
         
         GeneradorController generadorController = new GeneradorController(this);
