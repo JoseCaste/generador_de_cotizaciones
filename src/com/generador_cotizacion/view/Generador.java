@@ -78,7 +78,7 @@ public class Generador extends JFrame {
         panel.setLayout(null);
         
         lblYourimage = new JLabel("");
-        lblYourimage.setBounds(38, 0, 227, 66);
+        lblYourimage.setBounds(38, 0, 144, 82);
         panel.add(lblYourimage);
         
         btnSeleccionarImagen = new JButton("Seleccionar imagen");
