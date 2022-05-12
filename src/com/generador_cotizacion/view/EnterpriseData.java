@@ -44,7 +44,7 @@ public class EnterpriseData {
 		frmConfiguracin.getContentPane().setLayout(new GridLayout(0, 1));
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Datos de la empresa cotizadora", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "Datos de la empresa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(12, 12, 729, 400);
 		panel.setLayout(new GridLayout(0, 2));
 		frmConfiguracin.getContentPane().add(panel);
