@@ -3,7 +3,6 @@ package com.generador_cotizacion.controller;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -12,6 +11,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.generador_cotizacion.enums.Elements;
 import com.generador_cotizacion.exceptions.ExceptionConvert;
@@ -25,6 +27,7 @@ public class GeneradorController implements ActionListener {
 
 	private Generador generador;
 	private String imagePath;
+	private Logger logger = LogManager.getLogger(GeneradorController.class);
 
 	public GeneradorController() {
 	}
@@ -63,12 +66,14 @@ public class GeneradorController implements ActionListener {
 	private void createModelToList(final Vector<?> data) {
 		try {
 			if(imagePath == null || imagePath.equals(""))
-				throw new Exception("La logo no ha sido sido seleccionado");
+				throw new Exception("El logo no ha sido sido seleccionado");
 			validateField(data);
 			generateCotizacionPDF(data);
 		} catch (ExceptionConvert e) {
+			logger.error("Error createModelToList {}", e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch (Exception e) {
+			logger.error("Error createModelToList {}", e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		
@@ -92,6 +97,7 @@ public class GeneradorController implements ActionListener {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			logger.error("Error generateCotizacionPDF {}", e);
 			JOptionPane.showMessageDialog(generador, e.getMessage());
 		}
 
@@ -114,6 +120,7 @@ public class GeneradorController implements ActionListener {
 				product.setCodigo((String) fields.get(Elements.CODIGO.getId()));
 
 			} catch (NumberFormatException e) {
+				logger.error("Error al convertir {} {}",String.format("La cantidad del producto con nombre %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())),e);
 				e.printStackTrace();
 				throw new ExceptionConvert(String.format("La cantidad del producto con nombre %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())));
 			}
@@ -121,6 +128,7 @@ public class GeneradorController implements ActionListener {
 			try {
 				product.setUnitPrice(Double.parseDouble(((String) fields.get(Elements.UNIT_PRICE.getId())).trim()));
 			} catch (NumberFormatException e) {
+				logger.error("Error al convertir {} {}",String.format("El precio unitario del producto %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())),e);
 				e.printStackTrace();
 				throw new ExceptionConvert(String.format("El precio unitario del producto %s no es un número válido", (String) fields.get(Elements.CODIGO.getId())));
 			}

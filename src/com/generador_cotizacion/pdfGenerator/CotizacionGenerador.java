@@ -13,6 +13,8 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jasypt.util.text.AES256TextEncryptor;
 
 import com.generador_cotizacion.enums.Elements;
@@ -47,6 +49,8 @@ public class CotizacionGenerador {
 	private Vector<?> data;
 	private double totalPrice;
 
+	private Logger logger = LogManager.getLogger(CotizacionGenerador.class);
+	
 	public CotizacionGenerador(Vector<?> data) {
 		this.data = data;
 	}
@@ -91,12 +95,15 @@ public class CotizacionGenerador {
 			document.close();
 		} catch (NumberFormatException e) {
 			// TODO: handle exception
+			logger.error("Error al crear el pdf ",e);
 			e.printStackTrace();
 			throw new Exception("Error al crear el pdf");
 		} catch (FileException e) {
+			logger.error("Error con el documento ",e);
 			e.printStackTrace();
 			throw e;
 		}catch (MalformedURLException ex) {
+			logger.error("Error con la ruta de la imagen ",ex);
 			ex.printStackTrace();
 			throw new Exception("La ruta de la imágen no existe o ha sido eliminada"); 
 		}catch (Exception e) {
@@ -272,8 +279,8 @@ public class CotizacionGenerador {
 		Cell cell = new Cell();
 		Properties properties = new Properties();
 		File file = new File(PropertiesKeys.DIR.getId().concat("/dataenterprise.xml"));
-		if (!file.canRead())
-			throw new Exception("El archivo de datos de la empresa no se pudo crear o se encuentra abierto por otro programa");
+		/*if (!file.canRead())
+			throw new Exception("El archivo de datos de la empresa no se pudo crear o se encuentra abierto por otro programa");*/
 
 		try {
 			FileInputStream fileInputStream = new FileInputStream(file);
@@ -296,9 +303,11 @@ public class CotizacionGenerador {
 			fileInputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.error("No se pudo encontrar el archivo de congiguración ",e);
 			e.printStackTrace();
 			throw new Exception("No se pudo encontrar el archivo de configuración de la empresa");
 		}catch (NullPointerException e) {
+			logger.error("Alguna propiedad de la empresa no ha sido generada, porfavor de crear un archivo nuevo",e);
 			throw new Exception("Alguna propiedad de la empresa no ha sido generada, porfavor de crear un archivo nuevo");
 		}
 		cell.setBorder(null);
