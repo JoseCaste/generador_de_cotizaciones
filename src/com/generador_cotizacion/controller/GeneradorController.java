@@ -63,7 +63,7 @@ public class GeneradorController implements ActionListener {
 	private void createModelToList(final Vector<?> data) {
 		try {
 			if(imagePath == null || imagePath.equals(""))
-				throw new Exception("La logo no ha sido sido seleccionado");
+				throw new Exception("El logo no ha sido sido seleccionado");
 			validateField(data);
 			generateCotizacionPDF(data);
 		} catch (ExceptionConvert e) {
