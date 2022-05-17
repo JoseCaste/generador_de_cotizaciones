@@ -70,7 +70,7 @@ public class GeneradorController implements ActionListener {
 			validateField(data);
 			generateCotizacionPDF(data);
 		} catch (ExceptionConvert e) {
-			logger.error("Error createModelToList {}", e.getMessage());
+			logger.error("Error createModelToList {}", e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch (Exception e) {
 			logger.error("Error createModelToList {}", e);
